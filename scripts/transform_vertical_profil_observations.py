@@ -19,6 +19,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 import sys
+
 sys.path.insert(1, ".")
 import os
 import time
@@ -44,8 +45,8 @@ if __name__ == "__main__":
     profil.data_source = instru
 
     writer = DefaultWriter(profil, os.path.join(outputDir, str(instru) + "_" + str(
-             profil.read_variable_time()[0].strftime("%m-%Y")) + '_to_' + str(
-             profil.read_variable_time()[profil.get_t_size() - 1].strftime("%m-%Y")) + '.nc'))
+        profil.read_variable_time()[0].strftime("%m-%Y")) + '_to_' + str(
+        profil.read_variable_time()[profil.get_t_size() - 1].strftime("%m-%Y")) + '.nc'))
 
     writer.write_variable_sea_water_temperature()
     writer.write_variable_sea_water_salinity()
@@ -54,12 +55,3 @@ if __name__ == "__main__":
     stop_time = time.time()
     print("----- Time ", (time.time() - start_time), " seconds -----")
     print('End of program')
-    
-    
-       
-        
-    
-    
-    
-    
-    

@@ -19,6 +19,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 import sys
+
 sys.path.insert(1, ".")
 import time
 from datetime import timedelta
@@ -43,7 +44,7 @@ if __name__ == "__main__":
     modelData = '/data/modelling/symphonie/outputs/REF2018/'
 
     # Output dir
-    outputDir = "/data/modelling/symphonie/outputs/"
+    outputDir = "/data/outputs/"
     outputFilename = "symphonie_profils_"
 
     # We don't interpolate in time so we set the timedelta to the SYMPHONIE output frequency
@@ -68,15 +69,15 @@ if __name__ == "__main__":
     reader = SYMPHONIEReader(
         modelGrid,
         modelData,
-        stationCoords # Give the exact same location as the observations
+        stationCoords  # Give the exact same location as the observations
     )
     myPoints = TimeLevelMultiPoint(
         reader,
-        zbox=[0.0, 2.0], # Only export data from the surface to 2m depth
-        resolution_z=0.2, # Interpolate every 20 cm
-        #time_range=profil.read_axis_t() # Give the exact same datetime as the observations
-        start_time = "2018-11-02 17:16:00", # or use the start_time / end_time
-        end_time = "2018-11-02 17:16:00"
+        zbox=[0.0, 2.0],  # Only export data from the surface to 2m depth
+        resolution_z=0.2,  # Interpolate every 20 cm
+        # time_range=profil.read_axis_t() # Give the exact same datetime as the observations
+        start_time="2018-11-02 17:16:00",  # or use the start_time / end_time
+        end_time="2018-11-02 17:16:00"
     )
 
     writer = DefaultWriter(myPoints, outputDir + outputFilename + str(

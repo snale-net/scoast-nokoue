@@ -109,7 +109,7 @@ class FloodingPolygonWriter(CoverageWriter):
             for time_index in range(0, self.coverage.get_t_size()):
                 time = self.coverage.read_axis_t(type="target_global")[time_index]
 
-                logging.info(f"[FloodingPolygontWriter] Writing flood extent at time '{time}'")
+                logging.info(f"[FloodPolygonWriter] Writing flood extent at time '{time}'")
 
                 global_data = np.empty([self.coverage.get_y_size(), self.coverage.get_x_size()])
 
@@ -130,10 +130,10 @@ class FloodingPolygonWriter(CoverageWriter):
                 )
                 total_union = unary_union(list(geoms))
 
-                smoothed = smooth_geometry(total_union, smoothing=min(self.x_pixel_size, self.y_pixel_size) / 2)
+                # smoothed = smooth_geometry(total_union, smoothing=min(self.x_pixel_size, self.y_pixel_size) / 2)
                 # simplified = smoothed.simplify(min(self.x_pixel_size, self.y_pixel_size), preserve_topology=True)
 
-                union_vector_gdf = gpd.GeoDataFrame(geometry=[smoothed], crs="EPSG:4326")
+                union_vector_gdf = gpd.GeoDataFrame(geometry=[total_union], crs="EPSG:4326")
                 union_vector_gdf['Type'] = 'flooded'
                 union_vector_gdf['Datetime'] = time.strftime("%Y-%m-%d %H:%M:%S")
 
@@ -166,6 +166,12 @@ class FloodingPolygonWriter(CoverageWriter):
                 global_data = np.stack((height, speed))
 
                 # Apply classification with height and speed
+                # https://www.ecologie.gouv.fr/sites/default/files/documents/Guide_m%C3%A9thodo_PPRL_%202014.pdf
+                # Page 109
+                # severity 1 = low
+                # severity 2 = moderate
+                # severity 3 = high
+                # severity 4 = very high
                 global_data[0][(global_data[0] > 1.0) & (global_data[1] >= 0.5)] = 4
                 global_data[0][(global_data[0] > 1.0) & (global_data[1] < 0.5)] = 3
                 global_data[0][(global_data[0] >= 0.5) & (global_data[0] <= 1.0) & (global_data[1] >= 0.5)] = 3
@@ -178,7 +184,7 @@ class FloodingPolygonWriter(CoverageWriter):
 
                     if np.all(mask == False):
                         logging.warning(
-                            f"[FloodingPolygontWriter] No flood severity {dem_threshold} found at time '{time}'")
+                            f"[FloodPolygonWriter] No flood severity {dem_threshold} was found at time '{time}'")
                         continue
 
                     geoms = (
@@ -190,15 +196,15 @@ class FloodingPolygonWriter(CoverageWriter):
 
                     if total_union.is_empty:
                         logging.warning(
-                            f"[FloodingPolygontWriter] No flood severity {dem_threshold} found at time '{time}'")
+                            f"[FloodPolygonWriter] No flood severity {dem_threshold} was found at time '{time}'")
                         continue
 
                     logging.info(
-                        f"[FloodingPolygontWriter] Writing polygon classification {dem_threshold} at time '{time}'")
+                        f"[FloodPolygonWriter] Writing flood severity {dem_threshold} at time '{time}'")
 
-                    smoothed = smooth_geometry(total_union, smoothing=min(self.x_pixel_size, self.y_pixel_size) / 2)
+                    # smoothed = smooth_geometry(total_union, smoothing=min(self.x_pixel_size, self.y_pixel_size) / 2)
 
-                    union_vector_gdf = gpd.GeoDataFrame(geometry=[smoothed], crs="EPSG:4326")
+                    union_vector_gdf = gpd.GeoDataFrame(geometry=[total_union], crs="EPSG:4326")
 
                     if self.mask is not None:
                         union_vector_gdf = union_vector_gdf.overlay(self.mask, how='difference')
@@ -209,7 +215,7 @@ class FloodingPolygonWriter(CoverageWriter):
 
                     # Saving GeoDataFrame to shapefile
                     union_vector_gdf.to_file(
-                        os.path.join(self.filename, f"{time.strftime("%Y%m%d_%H%M%S")}_severity-{dem_threshold}.shp"))
+                        os.path.join(self.filename, f"{time.strftime("%Y%m%d_%H%M%S")}_flood_severity.shp"), mode="a")
 
         else:
             raise CoverageError("FloodingPolygonWriter",

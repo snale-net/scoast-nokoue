@@ -18,23 +18,27 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
+import sys
+
+sys.path.insert(1, ".")
+
 import time
 from datetime import timedelta
 
 from spatialetl.coverage import Coverage, TimeCoverage
-from spatialetl.providers.common.gdal.coverage.tiff.default_writer import DefaultWriter
-from spatialetl.providers.symphonie.coverage.netcdf.symphonie_reader import SYMPHONIEReader as CoverageReader
+from nokoue.coverage.shape.flood_polygon_writer import FloodingPolygonWriter as DefaultWriter
+from nokoue.coverage.symphonie.ref2018_reader import SYMPHONIEReader as CoverageReader
 from spatialetl.utils.logger import logging
 
 if __name__ == "__main__":
     start_time = time.time()
-    logging.setLevel(logging.RUN)
+    logging.setLevel(logging.INFO)
 
     Coverage.HORIZONTAL_INTERPOLATOR = "cgal"
 
     # Setting to compute a daily average
     TimeCoverage.TIME_INTERPOLATION_METHOD = "mean"
-    TimeCoverage.TIME_DELTA = timedelta(days=1)
+    TimeCoverage.TIME_DELTA = timedelta(hours=1.5)
 
     # Read SYMPHONIE data
     reader = CoverageReader('/data/grid/grid_zoom.nc',
@@ -44,16 +48,14 @@ if __name__ == "__main__":
         reader,
         resolution_x=0.0002,
         resolution_y=0.0002,
-        freq="1d",
+        freq="1h",
         start_time="2018-11-02 17:16:00",
         end_time="2018-11-02 17:16:00",
         nb_thread=12);
 
-    writer = DefaultWriter(coverage, '/data/outputs/')
-
-    writer.write_variable_sea_surface_height_above_mean_sea_level()
-    writer.write_variable_sea_surface_salinity()
-    writer.write_variable_sea_water_salinity_at_ground_level()
+    writer = DefaultWriter(coverage, '/data/outputs')
+    writer.write_variable_flood_extent()
+    writer.write_variable_flood_severity()
     writer.close()
 
     stop_time = time.time()

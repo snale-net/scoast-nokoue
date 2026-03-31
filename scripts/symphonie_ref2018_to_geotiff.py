@@ -19,6 +19,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 import sys
+
 sys.path.insert(1, ".")
 
 import time
@@ -52,7 +53,7 @@ if __name__ == "__main__":
         end_time="2018-11-02 17:16:00",
         nb_thread=12);
 
-    writer = DefaultWriter(coverage, '/data/modelling/symphonie/outputs/docker/')
+    writer = DefaultWriter(coverage, '/data/outputs')
 
     writer.write_variable_sea_surface_height_above_mean_sea_level()
     writer.write_variable_sea_surface_salinity()

@@ -20,8 +20,11 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-import time
+import sys
 
+sys.path.insert(1, ".")
+
+import time
 from spatialetl.coverage import Coverage, TimeCoverage, TimeLevelCoverage
 from spatialetl.providers.common.netcdf.coverage.default_writer import DefaultWriter
 from spatialetl.utils.logger import logging
