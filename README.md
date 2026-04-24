@@ -22,7 +22,7 @@ Package ``scoast-nokoue``
 Pull the spatialetl docker image
 
 ```bash
-docker image pull fretif/spatialetl:beta1.2
+docker image pull fretif/spatialetl:beta1.3
 ```
 
 ## Scripts
@@ -71,6 +71,18 @@ Transform in-situ data from Matlab to netCDF format.
 `transform_vertical_profil_observations_to_coverage.py`
 
 Transform in-situ data from Matlab to tiff format with an objective interpolation.
+
+### 8. Compute residence time from Eulerian tracers
+
+`symphonie_ref2018_compute_eulerian_residence_time.py`
+
+Compute the residence time of water from Eulerian tracers.
+
+### 9. Compute residence time from Lagrangian tracers
+
+`symphonie_ref2018_compute_lagrangian_residence_time.py`
+
+Compute the residence time of water from Lagangrian tracers.
 
 
 ## How to use
