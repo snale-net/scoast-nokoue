@@ -33,7 +33,7 @@ if __name__ == '__main__':
 
     out_dir = "/data/modelling/bathtub"
     dem_file = "/data/observations/topography/DR_V3/mns_pleiades_chenal_4326.tif"
-    msl_file = "/data/modelling/symphonie/outputs/docker/20181102_171652_ssh_msl.tiff"
+    msl_file = "/data/modelling/bathtub/20181102_171652_ssh_msl.tiff"
 
     dem, proj, geotrans = read_img(dem_file, is_verbose=True)
 
@@ -48,13 +48,13 @@ if __name__ == '__main__':
 
     #write_img(f"{out_dir}/flood_nokoue_mask.tif", proj, geotrans, land_mask)
 
-    slr_data = read_img(msl_file) + 2.0
+    slr_data,slr_proj,slr_geotrans = read_img(msl_file, is_verbose=True)
+    slr_data = slr_data +2
     slr_data = np.flip(slr_data, axis=0)
-    slr_data = extract_sea_level_at_coastline(slr_data, land_mask)
-    #write_img(f"{out_dir}/flood_nokoue_slr.tif", proj, geotrans, slr_data)
+    slr_data = extract_sea_level_at_coastline(slr_data,slr_geotrans,land_mask,geotrans)
+    write_img(f"{out_dir}/flood_nokoue_slr.tif", proj, geotrans, slr_data)
     slr_data_b = nan2neginf(slr_data)
 
-    #for atte_factor in [0, 0.005]:
     #atte_factor = 0.005
     atte_factor = 0.0022
 

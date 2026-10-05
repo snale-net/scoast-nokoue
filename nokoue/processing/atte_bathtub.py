@@ -5,6 +5,7 @@
 from queue import Queue
 
 import numpy as np
+import rasterio
 from numba import njit
 from osgeo import gdal
 from scipy import ndimage
@@ -63,6 +64,22 @@ def write_img(file_path, im_proj, im_geotrans, im_data, dtype=None, nodata=None)
                 dataset.GetRasterBand(i+1).SetNoDataValue(nodata)
     del dataset
 
+def pixel_to_xy(gt, cols, rows):
+    x = gt[0] + (cols + 0.5) * gt[1] + (rows + 0.5) * gt[2]
+    y = gt[3] + (cols + 0.5) * gt[4] + (rows + 0.5) * gt[5]
+    return x, y
+
+
+def xy_to_pixel_nearest(gt, x, y):
+    cols = np.rint(
+        (x - gt[0]) / gt[1]
+    ).astype(int)
+
+    rows = np.rint(
+        (y - gt[3]) / gt[5]
+    ).astype(int)
+
+    return rows, cols
 
 def inf2nan(x):
     x[np.isinf(x)] = np.nan
@@ -99,7 +116,7 @@ def remove_small_sea_areas(land_mask, min_pixels, offset=5):
 
     return land_mask
 
-def extract_sea_level_at_coastline(slr_data,land_mask,offset=1):
+def extract_sea_level_at_coastline(slr_data,slr_gt,land_mask,land_mask_gt,offset=1):
     # 1 = land, 2 = sea
     land = land_mask == 1
     sea_mask = land_mask == 2
@@ -120,7 +137,31 @@ def extract_sea_level_at_coastline(slr_data,land_mask,offset=1):
         coast[:, -offset:] = False
 
     sea_values_2d = np.full(land_mask.shape, np.nan)
-    sea_values_2d[coast] = slr_data[coast]
+
+    rows, cols = np.where(coast)
+
+    # Coordonnées lon/lat des centres des pixels coast
+    x, y = pixel_to_xy(land_mask_gt, cols, rows)
+
+    # Pixel SLR le plus proche
+    slr_rows, slr_cols = xy_to_pixel_nearest(
+        slr_gt,
+        x,
+        y
+    )
+
+    # Vérifier les limites
+    valid = (
+            (slr_rows >= 0) &
+            (slr_rows < slr_data.shape[0]) &
+            (slr_cols >= 0) &
+            (slr_cols < slr_data.shape[1])
+    )
+
+    sea_values_2d[rows[valid], cols[valid]] = (
+        slr_data[slr_rows[valid], slr_cols[valid]]
+    )
+    #sea_values_2d[coast] = slr_data[coast]
 
     return sea_values_2d
 
