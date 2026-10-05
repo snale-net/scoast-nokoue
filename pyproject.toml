@@ -18,14 +18,10 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-[build-system]
-requires = ["flit_core==3.12.0"]
-build-backend = "flit_core.buildapi"
-
 [project]
 name = "scoast-nokoue"
 version = "0.0.1"
-requires-python = ">=3.9"
+requires-python = ">=3.12"
 authors = [
   {name = "Fabien RÉTIF", email = "fabien.retif@snale.net"},
 ]
@@ -33,7 +29,9 @@ description = "Data transformation scripts for Nokoue modelling"
 readme = "README.md"
 
 dependencies = [
-  "spatialetl>=0.2.0",
-  "spatialetl-providers-symphonie>=0.0.1",
-  "spatialetl-providers-common-gdal>=0.0.1"
+    "spatialetl>=0.2.0",
+    "spatialetl-providers-common-interpcgal>=0.1",
+    "spatialetl-providers-symphonie>=0.0.1",
+    "spatialetl-providers-common-gdal>=0.0.1",
+    "numba==0.68.0"
 ]
