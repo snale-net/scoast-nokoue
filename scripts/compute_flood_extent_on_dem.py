@@ -25,38 +25,38 @@ sys.path.insert(1, ".")
 import os
 import numpy as np
 from nokoue.processing.atte_bathtub import nan2neginf, read_img, write_img, extract_sea_level_at_coastline, \
-    fast_atte_bathtub, remove_small_sea_areas
+    fast_atte_bathtub, rasterize_land_sea_mask
 from spatialetl.utils.logger import logging
 
 if __name__ == '__main__':
     logging.setLevel(logging.RUN)
 
-    out_dir = "/data/modelling/bathtub"
+    out_dir = "/data/outputs"
     dem_file = "/data/observations/topography/DR_V3/mns_pleiades_chenal_4326.tif"
+    mask_shapefile = "/data/raw-data/IGN_Masques/merged.shp"
     msl_file = "/data/modelling/bathtub/20181102_171652_ssh_msl.tiff"
 
     dem, proj, geotrans = read_img(dem_file, is_verbose=True)
 
-    land_mask = np.where(np.isnan(dem), 2, 1)  # Generate land/sea mask
-    pixel_area = 0.5 * 0.5
-    min_area = 1000
-    min_pixels = int(np.ceil(min_area / pixel_area))
-    land_mask = remove_small_sea_areas(
-        land_mask,
-        min_pixels
+    # Generate the land sea mask
+    land_mask = rasterize_land_sea_mask(
+        mask_shapefile,
+        dem,
+        proj,
+        geotrans
     )
 
-    #write_img(f"{out_dir}/flood_nokoue_mask.tif", proj, geotrans, land_mask)
+    write_img(f"{out_dir}/flood_nokoue_mask.tif", proj, geotrans, land_mask)
 
     slr_data,slr_proj,slr_geotrans = read_img(msl_file, is_verbose=True)
-    slr_data = slr_data +2
+    slr_data = slr_data +0.5
     slr_data = np.flip(slr_data, axis=0)
     slr_data = extract_sea_level_at_coastline(slr_data,slr_geotrans,land_mask,geotrans)
     write_img(f"{out_dir}/flood_nokoue_slr.tif", proj, geotrans, slr_data)
     slr_data_b = nan2neginf(slr_data)
 
     #atte_factor = 0.005
-    atte_factor = 0.0022
+    atte_factor = 0
 
     if not os.path.exists(out_dir):
         os.makedirs(out_dir)

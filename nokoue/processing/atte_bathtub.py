@@ -5,10 +5,8 @@
 from queue import Queue
 
 import numpy as np
-import rasterio
 from numba import njit
-from osgeo import gdal
-from scipy import ndimage
+from osgeo import gdal, ogr
 from scipy.ndimage import convolve
 from spatialetl.utils.logger import logging
 
@@ -25,7 +23,7 @@ def read_img(filename, is_convert_nan=True, is_verbose=False, tofloat_16=False):
         im_data = im_data.astype(np.float16)
     if is_convert_nan:
         im_data = im_data.astype(np.float32)
-        im_data[im_data==no_data] = np.nan
+        im_data[im_data == no_data] = np.nan
     if is_verbose:
         return im_data, im_proj, im_geotrans
     else:
@@ -46,7 +44,7 @@ def write_img(file_path, im_proj, im_geotrans, im_data, dtype=None, nodata=None)
     if len(im_data.shape) == 2:
         im_bands, (im_height, im_width) = 1, im_data.shape
     else:
-        im_bands, im_height, im_width = im_data.shape 
+        im_bands, im_height, im_width = im_data.shape
 
     driver = gdal.GetDriverByName("GTiff")
     dataset = driver.Create(file_path, im_width, im_height, im_bands, datatype, options=['COMPRESS=LZW'])
@@ -59,10 +57,11 @@ def write_img(file_path, im_proj, im_geotrans, im_data, dtype=None, nodata=None)
             dataset.GetRasterBand(1).SetNoDataValue(nodata)
     else:
         for i in range(im_bands):
-            dataset.GetRasterBand(i+1).WriteArray(im_data[i])
+            dataset.GetRasterBand(i + 1).WriteArray(im_data[i])
             if nodata:
-                dataset.GetRasterBand(i+1).SetNoDataValue(nodata)
+                dataset.GetRasterBand(i + 1).SetNoDataValue(nodata)
     del dataset
+
 
 def pixel_to_xy(gt, cols, rows):
     x = gt[0] + (cols + 0.5) * gt[1] + (rows + 0.5) * gt[2]
@@ -81,42 +80,81 @@ def xy_to_pixel_nearest(gt, x, y):
 
     return rows, cols
 
+
 def inf2nan(x):
     x[np.isinf(x)] = np.nan
     return x
+
 
 def nan2neginf(x):
     x[np.isnan(x)] = np.inf
     x[np.isinf(x)] = -np.inf
     return x
 
-def remove_small_sea_areas(land_mask, min_pixels, offset=5):
-    sea_mask = land_mask == 2
 
-    labels, n = ndimage.label(sea_mask)
+def rasterize_land_sea_mask(
+        shapefile,
+        dem,
+        proj,
+        geotrans,
+        land_value=1,
+        sea_value=2,
+):
+    """
+    Rasterize a polygons shapefile of sea maks over the DEM grid.
 
-    sizes = np.bincount(labels.ravel())
+    land_value = 1
+    sea_value  = 2
+    """
 
-    # Find amall areas in sea
-    small_sea = np.zeros_like(sea_mask)
+    # DEM grid shape
+    nrows, ncols = dem.shape[:2]
 
-    for label in range(1, n + 1):
-        if sizes[label] < min_pixels:
-            small_sea[labels == label] = True
+    # Create the memory raster
+    mem_driver = gdal.GetDriverByName("MEM")
 
-    # Transform sea to land
-    land_mask[small_sea] = 1
+    mask_ds = mem_driver.Create(
+        "",
+        ncols,
+        nrows,
+        1,
+        gdal.GDT_Byte
+    )
 
-    # Exclude an offset from the DEM borders
-    if offset > 0:
-        land_mask[:offset, :] = 1
-        land_mask[-offset:, :] = 1
-        land_mask[:, :offset] = 1
-        land_mask[:, -offset:] = 1
+    mask_ds.SetGeoTransform(geotrans)
+    mask_ds.SetProjection(proj)
 
-    return land_mask
+    band = mask_ds.GetRasterBand(1)
 
-def extract_sea_level_at_coastline(slr_data,slr_gt,land_mask,land_mask_gt,offset=1):
+    # Fill with land value
+    band.Fill(land_value)
+
+    # Open the shapefile
+    vector_ds = ogr.Open(shapefile)
+    if vector_ds is None:
+        raise RuntimeError(f"Unable to read the shapefile : {shapefile}")
+
+    layer = vector_ds.GetLayer()
+
+    # Rasterize polygons as sea value
+    gdal.RasterizeLayer(
+        mask_ds,
+        [1],
+        layer,
+        burn_values=[sea_value]
+    )
+
+    # Convert raster to numpy array
+    mask = band.ReadAsArray()
+
+    # Clean up
+    vector_ds = None
+    mask_ds = None
+
+    return mask
+
+
+def extract_sea_level_at_coastline(slr_data, slr_gt, land_mask, land_mask_gt, offset=1):
     # 1 = land, 2 = sea
     land = land_mask == 1
     sea_mask = land_mask == 2
@@ -140,17 +178,17 @@ def extract_sea_level_at_coastline(slr_data,slr_gt,land_mask,land_mask_gt,offset
 
     rows, cols = np.where(coast)
 
-    # Coordonnées lon/lat des centres des pixels coast
+    # Get cordinates lon/lat of coast pixel center
     x, y = pixel_to_xy(land_mask_gt, cols, rows)
 
-    # Pixel SLR le plus proche
+    # Find the nearest SLR pixel
     slr_rows, slr_cols = xy_to_pixel_nearest(
         slr_gt,
         x,
         y
     )
 
-    # Vérifier les limites
+    # Check limits
     valid = (
             (slr_rows >= 0) &
             (slr_rows < slr_data.shape[0]) &
@@ -161,14 +199,14 @@ def extract_sea_level_at_coastline(slr_data,slr_gt,land_mask,land_mask_gt,offset
     sea_values_2d[rows[valid], cols[valid]] = (
         slr_data[slr_rows[valid], slr_cols[valid]]
     )
-    #sea_values_2d[coast] = slr_data[coast]
 
     return sea_values_2d
 
+
 def convolve_sealand_edge(mask):
-    window = [[-1,-1,-1],
-              [-1, 8,-1],
-              [-1,-1,-1]]
+    window = [[-1, -1, -1],
+              [-1, 8, -1],
+              [-1, -1, -1]]
     mask = mask - 1
     edges = np.where(convolve(mask, window, mode='constant') > 1)
     return np.column_stack(edges).tolist()
@@ -185,6 +223,7 @@ def initialize_queue(border):
     for idx in ini_list:
         q.put(idx)
     return q
+
 
 def fast_atte_bathtub(dem, border_data, all_mask, atte_factor=0.02):
     land_mask = np.isfinite(dem)
@@ -240,15 +279,16 @@ def fast_atte_bathtub(dem, border_data, all_mask, atte_factor=0.02):
     flood_depth = inf2nan(flood_depth) - dem
     return flood_depth
 
+
 @njit
 def propagate_slr(
-    dem,
-    land_mask,
-    border_data,
-    queue,
-    in_queue,
-    atte_factor,
-    n_initial
+        dem,
+        land_mask,
+        border_data,
+        queue,
+        in_queue,
+        atte_factor,
+        n_initial
 ):
     nrows, ncols = dem.shape
     max_queue = queue.size
