@@ -1,0 +1,164 @@
+ 8    ! 9  ! 8 !Number of river inputs 15
+________________________________________________________________________________
+So
+ 7    ! river mouth location along i axis
+ 215  ! river mouth location along j axis
+ 5    ! length (grid nodes) of an additionnal water way
+1     ! Flux Direction 1=increasing i, 2=increasing j, 3=decreasing i, 4=decreasing j  RIVERDIR(:)
+10    ! distance (grid indexes) from the mouth where upwind advection is applied 
+600.   ! Default Value (if no river file) River discharge  m3/s      RIVERFLUX(:,1)
+3. , 50. , 2000. ! In case of an additionnal water way, give H, cross DX, along DX of the firt grid point
+00.00 ! Incoming salinity                                           RIVER_S(:)
+29.   ! Annual minimum value of the incoming temperature            RIVER_TMIN(:)
+08    ! Month of the annual minimum value of the incoming temperature
+31.1  ! Annual maximim value of the incoming temperature            RIVER_TMAX(:)
+0     ! Boundary condition scheme at river grid input cell          RIVER_OBCTYPE(:)
+1     ! 1 if a data discharge file is available, 0 otherwise        REALRIVER(:)
+24.   ! Discharge data file periodicity (hours)                     RIVERINFO(:)
+{{ candidate.so_file }}
+2016 01    01     12     00      00  ! Year Month Day Hour Minute Second of the first data
+________________________________________________________________________________
+So
+ 7    ! river mouth location along i axis
+ 216  ! river mouth location along j axis
+ 5    ! length (grid nodes) of an additionnal water way
+1     ! Flux Direction 1=increasing i, 2=increasing j, 3=decreasing i, 4=decreasing j  RIVERDIR(:)
+10    ! distance (grid indexes) from the mouth where upwind advection is applied 
+600.   ! Default Value (if no river file) River discharge  m3/s      RIVERFLUX(:,1)
+3. , 50. , 2000. ! In case of an additionnal water way, give H, cross DX, along DX of the firt grid point
+00.00 ! Incoming salinity                                           RIVER_S(:)
+29.   ! Annual minimum value of the incoming temperature            RIVER_TMIN(:)
+08    ! Month of the annual minimum value of the incoming temperature
+31.1  ! Annual maximim value of the incoming temperature            RIVER_TMAX(:)
+0     ! Boundary condition scheme at river grid input cell          RIVER_OBCTYPE(:)
+1     ! 1 if a data discharge file is available, 0 otherwise        REALRIVER(:)
+24.   ! Discharge data file periodicity (hours)                     RIVERINFO(:)
+{{ candidate.so_file }}
+2016 01    01     12     00      00  ! Year Month Day Hour Minute Second of the first data
+________________________________________________________________________________
+So
+ 7    ! river mouth location along i axis
+ 217  ! river mouth location along j axis
+ 5    ! length (grid nodes) of an additionnal water way
+1     ! Flux Direction 1=increasing i, 2=increasing j, 3=decreasing i, 4=decreasing j  RIVERDIR(:)
+10    ! distance (grid indexes) from the mouth where upwind advection is applied 
+600.   ! Default Value (if no river file) River discharge  m3/s      RIVERFLUX(:,1)
+3. , 50. , 2000. ! In case of an additionnal water way, give H, cross DX, along DX of the firt grid point
+00.00 ! Incoming salinity                                           RIVER_S(:)
+29.   ! Annual minimum value of the incoming temperature            RIVER_TMIN(:)
+08    ! Month of the annual minimum value of the incoming temperature
+31.1  ! Annual maximim value of the incoming temperature            RIVER_TMAX(:)
+0     ! Boundary condition scheme at river grid input cell          RIVER_OBCTYPE(:)
+1     ! 1 if a data discharge file is available, 0 otherwise        REALRIVER(:)
+24.   ! Discharge data file periodicity (hours)                     RIVERINFO(:)
+{{ candidate.so_file }}
+2016 01    01     12     00      00  ! Year Month Day Hour Minute Second of the first data
+________________________________________________________________________________
+Oueme
+ 47    ! river mouth location along i axis
+ 548  ! river mouth location along j axis
+ 5    ! length (grid nodes) of an additionnal water way
+1     ! Flux Direction 1=increasing i, 2=increasing j, 3=decreasing i, 4=decreasing j  RIVERDIR(:)
+10    ! distance (grid indexes) from the mouth where upwind advection is applied 
+1000.   ! Default Value (if no river file) River discharge  m3/s      RIVERFLUX(:,1)
+3. , 50. , 2000. ! In case of an additionnal water way, give H, cross DX, along DX of the firt grid point
+00.00 ! Incoming salinity                                           RIVER_S(:)
+29.   ! Annual minimum value of the incoming temperature            RIVER_TMIN(:)
+08    ! Month of the annual minimum value of the incoming temperature
+31.1  ! Annual maximim value of the incoming temperature            RIVER_TMAX(:)
+0     ! Boundary condition scheme at river grid input cell          RIVER_OBCTYPE(:)
+1     ! 1 if a data discharge file is available, 0 otherwise        REALRIVER(:)
+24.   ! Discharge data file periodicity (hours)                     RIVERINFO(:)
+{{ candidate.oueme_file }}
+2016 01    01     12     00      00  ! Year Month Day Hour Minute Second of the first data
+________________________________________________________________________________
+Oueme
+ 47    ! river mouth location along i axis
+ 549   ! river mouth location along j axis
+ 5    ! length (grid nodes) of an additionnal water way
+1     ! Flux Direction 1=increasing i, 2=increasing j, 3=decreasing i, 4=decreasing j  RIVERDIR(:)
+10    ! distance (grid indexes) from the mouth where upwind advection is applied 
+1000.   ! Default Value (if no river file) River discharge  m3/s      RIVERFLUX(:,1)
+3. , 50. , 2000. ! In case of an additionnal water way, give H, cross DX, along DX of the firt grid point
+00.00 ! Incoming salinity                                           RIVER_S(:)
+29.   ! Annual minimum value of the incoming temperature            RIVER_TMIN(:)
+08    ! Month of the annual minimum value of the incoming temperature
+31.1  ! Annual maximim value of the incoming temperature            RIVER_TMAX(:)
+0     ! Boundary condition scheme at river grid input cell          RIVER_OBCTYPE(:)
+1     ! 1 if a data discharge file is available, 0 otherwise        REALRIVER(:)
+24.   ! Discharge data file periodicity (hours)                     RIVERINFO(:)
+{{ candidate.oueme_file }}
+2016 01    01     12     00      00  ! Year Month Day Hour Minute Second of the first data
+________________________________________________________________________________
+Oueme
+ 47    ! river mouth location along i axis
+ 550  ! river mouth location along j axis
+ 5    ! length (grid nodes) of an additionnal water way
+1     ! Flux Direction 1=increasing i, 2=increasing j, 3=decreasing i, 4=decreasing j  RIVERDIR(:)
+10    ! distance (grid indexes) from the mouth where upwind advection is applied 
+1000. ! Default Value (if no river file) River discharge  m3/s      RIVERFLUX(:,1)
+3. , 50. , 2000. ! In case of an additionnal water way, give H, cross DX, along DX of the firt grid point
+00.00 ! Incoming salinity                                           RIVER_S(:)
+29.   ! Annual minimum value of the incoming temperature            RIVER_TMIN(:)
+08    ! Month of the annual minimum value of the incoming temperature
+31.1  ! Annual maximim value of the incoming temperature            RIVER_TMAX(:)
+0     ! Boundary condition scheme at river grid input cell          RIVER_OBCTYPE(:)
+1     ! 1 if a data discharge file is available, 0 otherwise        REALRIVER(:)
+24.   ! Discharge data file periodicity (hours)                     RIVERINFO(:)
+{{ candidate.oueme_file }}
+2016 01    01     12     00      00  ! Year Month Day Hour Minute Second of the first data
+________________________________________________________________________________
+Djonou
+ 263    ! river mouth location along i axis
+ 35  ! river mouth location along j axis
+ 5    ! length (grid nodes) of an additionnal water way
+2     ! Flux Direction 1=increasing i, 2=increasing j, 3=decreasing i, 4=decreasing j  RIVERDIR(:)
+10    ! distance (grid indexes) from the mouth where upwind advection is applied 
+1000. ! Default Value (if no river file) River discharge  m3/s      RIVERFLUX(:,1)
+3. , 50. , 2000. ! In case of an additionnal water way, give H, cross DX, along DX of the firt grid point
+00.00 ! Incoming salinity                                           RIVER_S(:)
+29.   ! Annual minimum value of the incoming temperature            RIVER_TMIN(:)
+08    ! Month of the annual minimum value of the incoming temperature
+31.1  ! Annual maximim value of the incoming temperature            RIVER_TMAX(:)
+0     ! Boundary condition scheme at river grid input cell          RIVER_OBCTYPE(:)
+1     ! 1 if a data discharge file is available, 0 otherwise        REALRIVER(:)
+24.   ! Discharge data file periodicity (hours)                     RIVERINFO(:)
+{{ candidate.djonou_fil }}
+2016 01    01     12     00      00  ! Year Month Day Hour Minute Second of the first data
+________________________________________________________________________________
+Djonou
+ 264    ! river mouth location along i axis
+ 35  ! river mouth location along j axis
+ 5    ! length (grid nodes) of an additionnal water way
+2     ! Flux Direction 1=increasing i, 2=increasing j, 3=decreasing i, 4=decreasing j  RIVERDIR(:)
+10    ! distance (grid indexes) from the mouth where upwind advection is applied 
+1000. ! Default Value (if no river file) River discharge  m3/s      RIVERFLUX(:,1)
+3. , 50. , 2000. ! In case of an additionnal water way, give H, cross DX, along DX of the firt grid point
+00.00 ! Incoming salinity                                           RIVER_S(:)
+29.   ! Annual minimum value of the incoming temperature            RIVER_TMIN(:)
+08    ! Month of the annual minimum value of the incoming temperature
+31.1  ! Annual maximim value of the incoming temperature            RIVER_TMAX(:)
+0     ! Boundary condition scheme at river grid input cell          RIVER_OBCTYPE(:)
+1     ! 1 if a data discharge file is available, 0 otherwise        REALRIVER(:)
+24.   ! Discharge data file periodicity (hours)                     RIVERINFO(:)
+{{ candidate.djonou_file }}
+2016 01    01     12     00      00  ! Year Month Day Hour Minute Second of the first data
+________________________________________________________________________________
+PortoNovo
+ 327    ! river mouth location along i axis
+ 631 ! river mouth location along j axis
+ 0    ! length (grid nodes) of an additionnal water way
+ 4    ! Flux Direction 1=increasing i, 2=increasing j, 3=decreasing i, 4=decreasing j  RIVERDIR(:)
+10    ! distance (grid indexes) from the mouth where upwind advection is applied 
+0.000 ! Default Value (if no river file) River discharge  m3/s      RIVERFLUX(:,1)
+3. , 50. , 2000. ! In case of an additionnal water way, give H, cross DX, along DX of the firt grid point
+00.00 ! Incoming salinity                                           RIVER_S(:)
+29.   ! Annual minimum value of the incoming temperature            RIVER_TMIN(:)
+08    ! Month of the annual minimum value of the incoming temperature
+31.1  ! Annual maximim value of the incoming temperature            RIVER_TMAX(:)
+0     ! Boundary condition scheme at river grid input cell          RIVER_OBCTYPE(:)
+0     ! 1 if a data discharge file is available, 0 otherwise        REALRIVER(:)
+24.   ! Discharge data file periodicity (hours)                     RIVERINFO(:)
+{{ candidate.portonovo_file }}
+2016 01    01     12     00      00  ! Year Month Day Hour Minute Second of the first data
+________________________________________________________________________________
