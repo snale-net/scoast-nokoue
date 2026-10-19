@@ -37,3 +37,7 @@ ENV/
 
 # UV cache
 .uv-cache/
+
+# Containers
+*.sif
+*.tar

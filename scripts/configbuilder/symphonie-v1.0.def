@@ -1,0 +1,160 @@
+Bootstrap: localimage
+From: /home/qt/retiff/symphonie-container/symphonie-prebuilt.sif
+
+%setup
+    mkdir -p $SINGULARITY_ROOTFS/model/NOK_MORA_v391
+%files
+    /work/DTF/common/UC/SCOAST/NK/SYMPHONIE-v1.0/SYMPHONIE_v391 /model/SYMPHONIE_v391
+%environment
+
+    # Intel compiler
+	export LD_LIBRARY_PATH=/work/softs/rh8/spack_install/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-compilers-2021.3.0-po2unejzdcprr7unoes754heiqovvwbw/lib:$LD_LIBRARY_PATH
+    export CMAKE_PREFIX_PATH=/work/softs/rh8/spack_install/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-compilers-2021.3.0-po2unejzdcprr7unoes754heiqovvwbw/:$CMAKE_PREFIX_PATH
+    #export ACL_BOARD_VENDOR_PATH=/opt/Intel/OpenCLFPGA/oneAPI/Boards:$ACL_BOARD_VENDOR_PATH
+
+    export CMPLR_ROOT=/work/softs/rh8/spack_install/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-compilers-2021.3.0-po2unejzdcprr7unoes754heiqovvwbw/compiler/2021.3.0
+    export FPGA_VARS_ARGS=""
+    export FPGA_VARS_DIR=/work/softs/rh8/spack_install/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-compilers-2021.3.0-po2unejzdcprr7unoes754heiqovvwbw/compiler/2021.3.0/linux/lib/oclfpga
+    export INTELFPGAOCLSDKROOT=/work/softs/rh8/spack_install/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-compilers-2021.3.0-po2unejzdcprr7unoes754heiqovvwbw/compiler/2021.3.0/linux/lib/oclfpga
+
+    export LIBRARY_PATH=/work/softs/rh8/spack_install/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-compilers-2021.3.0-po2unejzdcprr7unoes754heiqovvwbw/compiler/2021.3.0/linux/compiler/lib/intel64_lin:/work/softs/rh8/spack_install/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-compilers-2021.3.0-po2unejzdcprr7unoes754heiqovvwbw/compiler/2021.3.0/linux/lib:$LD_LIBRARY_PATH
+    export OCL_ICD_FILENAMES=libintelocl_emu.so:libalteracl.so:/work/softs/rh8/spack_install/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-compilers-2021.3.0-po2unejzdcprr7unoes754heiqovvwbw/compiler/2021.3.0/linux/lib/x64/libintelocl.so
+    export CPATH=/work/softs/rh8/spack_install/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-compilers-2021.3.0-po2unejzdcprr7unoes754heiqovvwbw/compiler/2021.3.0/linux/include
+    export LD_LIBRARY_PATH=/work/softs/rh8/spack_install/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-compilers-2021.3.0-po2unejzdcprr7unoes754heiqovvwbw/compiler/2021.3.0/linux/compiler/lib/intel64_lin:$LD_LIBRARY_PATH
+    export LD_LIBRARY_PATH=/work/softs/rh8/spack_install/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-compilers-2021.3.0-po2unejzdcprr7unoes754heiqovvwbw/compiler/2021.3.0/linux/lib/oclfpga/linux64/lib:$LD_LIBRARY_PATH
+    export LD_LIBRARY_PATH=/work/softs/rh8/spack_install/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-compilers-2021.3.0-po2unejzdcprr7unoes754heiqovvwbw/compiler/2021.3.0/linux/lib/oclfpga/host/linux64/lib:$LD_LIBRARY_PATH
+    export LD_LIBRARY_PATH=/work/softs/rh8/spack_install/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-compilers-2021.3.0-po2unejzdcprr7unoes754heiqovvwbw/compiler/2021.3.0/linux/lib/emu:$LD_LIBRARY_PATH
+    export LD_LIBRARY_PATH=/work/softs/rh8/spack_install/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-compilers-2021.3.0-po2unejzdcprr7unoes754heiqovvwbw/compiler/2021.3.0/linux/lib/x64:$LD_LIBRARY_PATH
+    export LD_LIBRARY_PATH=/work/softs/rh8/spack_install/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-compilers-2021.3.0-po2unejzdcprr7unoes754heiqovvwbw/compiler/2021.3.0/linux/lib:$LD_LIBRARY_PATH
+    export MANPATH=/work/softs/rh8/spack_install/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-compilers-2021.3.0-po2unejzdcprr7unoes754heiqovvwbw/compiler/2021.3.0/documentation/en/man/common:$MANPATH
+    export PATH=/work/softs/rh8/spack_install/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-compilers-2021.3.0-po2unejzdcprr7unoes754heiqovvwbw/compiler/2021.3.0/linux/bin:$PATH
+    export PATH=/work/softs/rh8/spack_install/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-compilers-2021.3.0-po2unejzdcprr7unoes754heiqovvwbw/compiler/2021.3.0/linux/bin/intel64:$PATH
+    export PATH=/work/softs/rh8/spack_install/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-compilers-2021.3.0-po2unejzdcprr7unoes754heiqovvwbw/compiler/2021.3.0/linux/lib/oclfpga/bin:$PATH
+    export PATH=/work/softs/rh8/spack_install/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-compilers-2021.3.0-po2unejzdcprr7unoes754heiqovvwbw/compiler/2021.3.0/linux/lib/oclfpga/llvm/aocl-bin:$PATH
+
+    export INTEL_ONEAPI_COMPILERSHOME=/work/softs/rh8/spack_install/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-compilers-2021.3.0-po2unejzdcprr7unoes754heiqovvwbw
+    export I_MPI_CC=icc
+    export I_MPI_CXX=icpc
+    export I_MPI_FC=ifort
+    export I_MPI_F90=ifort
+    export I_MPI_F77=ifort
+    export CC=/work/softs/rh8/spack_install/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-compilers-2021.3.0-po2unejzdcprr7unoes754heiqovvwbw/compiler/latest/linux/bin/intel64/icc
+    export CXX=/work/softs/rh8/spack_install/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-compilers-2021.3.0-po2unejzdcprr7unoes754heiqovvwbw/compiler/latest/linux/bin/intel64/icpc
+    export FC=/work/softs/rh8/spack_install/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-compilers-2021.3.0-po2unejzdcprr7unoes754heiqovvwbw/compiler/latest/linux/bin/intel64/ifort
+
+	# Intel MPI
+    export PATH=/work/softs/rh8/spack_install_20/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-mpi-2021.10.0-a4vpkrrwo5bemjm5tfa2d57c4u6pbky7/bin:$PATH
+    export PKG_CONFIG_PATH=/work/softs/rh8/spack_install_20/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-mpi-2021.10.0-a4vpkrrwo5bemjm5tfa2d57c4u6pbky7/lib/pkgconfig:$PKG_CONFIG_PATH
+    export CMAKE_PREFIX_PATH=/work/softs/rh8/spack_install_20/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-mpi-2021.10.0-a4vpkrrwo5bemjm5tfa2d57c4u6pbky7/.:$CMAKE_PREFIX_PATH
+    export CLASSPATH=/work/softs/rh8/spack_install_20/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-mpi-2021.10.0-a4vpkrrwo5bemjm5tfa2d57c4u6pbky7/mpi/2021.10.0//lib/mpi.jar:$CLASSPATH
+    export CPATH=/work/softs/rh8/spack_install_20/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-mpi-2021.10.0-a4vpkrrwo5bemjm5tfa2d57c4u6pbky7/mpi/2021.10.0//include:$CPATH
+    export FI_PROVIDER_PATH=/work/softs/rh8/spack_install_20/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-mpi-2021.10.0-a4vpkrrwo5bemjm5tfa2d57c4u6pbky7/mpi/2021.10.0//libfabric/lib/prov:/usr/lib64/libfabric:$FI_PROVIDER_PATH
+    export LD_LIBRARY_PATH=/work/softs/rh8/spack_install_20/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-mpi-2021.10.0-a4vpkrrwo5bemjm5tfa2d57c4u6pbky7/mpi/2021.10.0//libfabric/lib:/work/softs/rh8/spack_install_20/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-mpi-2021.10.0-a4vpkrrwo5bemjm5tfa2d57c4u6pbky7/mpi/2021.10.0//lib/release:/work/softs/rh8/spack_install_20/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-mpi-2021.10.0-a4vpkrrwo5bemjm5tfa2d57c4u6pbky7/mpi/2021.10.0//lib:$LD_LIBRARY_PATH
+    export LIBRARY_PATH=/work/softs/rh8/spack_install_20/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-mpi-2021.10.0-a4vpkrrwo5bemjm5tfa2d57c4u6pbky7/mpi/2021.10.0//libfabric/lib:/work/softs/rh8/spack_install_20/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-mpi-2021.10.0-a4vpkrrwo5bemjm5tfa2d57c4u6pbky7/mpi/2021.10.0//lib/release:/work/softs/rh8/spack_install_20/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-mpi-2021.10.0-a4vpkrrwo5bemjm5tfa2d57c4u6pbky7/mpi/2021.10.0//lib:$LIBRARY_PATH
+    export MANPATH=/work/softs/rh8/spack_install_20/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-mpi-2021.10.0-a4vpkrrwo5bemjm5tfa2d57c4u6pbky7/mpi/2021.10.0/man:$MANPATH
+    export PKG_CONFIG_PATH=/work/softs/rh8/spack_install_20/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-mpi-2021.10.0-a4vpkrrwo5bemjm5tfa2d57c4u6pbky7/mpi/2021.10.0/lib/pkgconfig:$PKG_CONFIG_PATH
+    export PATH=/work/softs/rh8/spack_install_20/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-mpi-2021.10.0-a4vpkrrwo5bemjm5tfa2d57c4u6pbky7/mpi/2021.10.0//bin:$PATH
+    export PATH=/work/softs/rh8/spack_install_20/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-mpi-2021.10.0-a4vpkrrwo5bemjm5tfa2d57c4u6pbky7/mpi/2021.10.0//libfabric/bin:$PATH
+    export INTEL_ONEAPI_MPIHOME=/work/softs/rh8/spack_install_20/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-mpi-2021.10.0-a4vpkrrwo5bemjm5tfa2d57c4u6pbky7
+    export I_MPI_PMI_LIBRARY=/usr/lib64/libpmi.so
+    export FI_PROVIDER=MLX
+    export I_MPI_ROOT=/work/softs/rh8/spack_install_20/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-mpi-2021.10.0-a4vpkrrwo5bemjm5tfa2d57c4u6pbky7/mpi/2021.10.0
+
+    # Netcdf & HDF5
+    export LD_LIBRARY_PATH=/softs/netcdf/hdf5.146/intel2021/icc20/c/4.9.3/lib:/softs/netcdf/hdf5.146/intel2021/icc20/fortran/4.5.3/lib:/softs/parallel-netcdf/intel2021/icc20/1.13.0/lib:/softs/hdf5/intel2021/icc20/1.14.6/lib:$LD_LIBRARY_PATH
+     # UCX
+    export PATH=/softs/ucx/1.16.0/bin:$PATH
+    export LD_LIBRARY_PATH=/softs/ucx/1.16.0/lib:$LD_LIBRARY_PATH
+
+%post
+    # Intel compiler
+	export LD_LIBRARY_PATH=/work/softs/rh8/spack_install/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-compilers-2021.3.0-po2unejzdcprr7unoes754heiqovvwbw/lib:$LD_LIBRARY_PATH
+    export CMAKE_PREFIX_PATH=/work/softs/rh8/spack_install/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-compilers-2021.3.0-po2unejzdcprr7unoes754heiqovvwbw/:$CMAKE_PREFIX_PATH
+    #export ACL_BOARD_VENDOR_PATH=/opt/Intel/OpenCLFPGA/oneAPI/Boards:$ACL_BOARD_VENDOR_PATH
+
+    export CMPLR_ROOT=/work/softs/rh8/spack_install/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-compilers-2021.3.0-po2unejzdcprr7unoes754heiqovvwbw/compiler/2021.3.0
+    export FPGA_VARS_ARGS=""
+    export FPGA_VARS_DIR=/work/softs/rh8/spack_install/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-compilers-2021.3.0-po2unejzdcprr7unoes754heiqovvwbw/compiler/2021.3.0/linux/lib/oclfpga
+    export INTELFPGAOCLSDKROOT=/work/softs/rh8/spack_install/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-compilers-2021.3.0-po2unejzdcprr7unoes754heiqovvwbw/compiler/2021.3.0/linux/lib/oclfpga
+
+    export LIBRARY_PATH=/work/softs/rh8/spack_install/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-compilers-2021.3.0-po2unejzdcprr7unoes754heiqovvwbw/compiler/2021.3.0/linux/compiler/lib/intel64_lin:/work/softs/rh8/spack_install/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-compilers-2021.3.0-po2unejzdcprr7unoes754heiqovvwbw/compiler/2021.3.0/linux/lib:$LD_LIBRARY_PATH
+    export OCL_ICD_FILENAMES=libintelocl_emu.so:libalteracl.so:/work/softs/rh8/spack_install/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-compilers-2021.3.0-po2unejzdcprr7unoes754heiqovvwbw/compiler/2021.3.0/linux/lib/x64/libintelocl.so
+    export CPATH=/work/softs/rh8/spack_install/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-compilers-2021.3.0-po2unejzdcprr7unoes754heiqovvwbw/compiler/2021.3.0/linux/include
+    export LD_LIBRARY_PATH=/work/softs/rh8/spack_install/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-compilers-2021.3.0-po2unejzdcprr7unoes754heiqovvwbw/compiler/2021.3.0/linux/compiler/lib/intel64_lin:$LD_LIBRARY_PATH
+    export LD_LIBRARY_PATH=/work/softs/rh8/spack_install/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-compilers-2021.3.0-po2unejzdcprr7unoes754heiqovvwbw/compiler/2021.3.0/linux/lib/oclfpga/linux64/lib:$LD_LIBRARY_PATH
+    export LD_LIBRARY_PATH=/work/softs/rh8/spack_install/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-compilers-2021.3.0-po2unejzdcprr7unoes754heiqovvwbw/compiler/2021.3.0/linux/lib/oclfpga/host/linux64/lib:$LD_LIBRARY_PATH
+    export LD_LIBRARY_PATH=/work/softs/rh8/spack_install/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-compilers-2021.3.0-po2unejzdcprr7unoes754heiqovvwbw/compiler/2021.3.0/linux/lib/emu:$LD_LIBRARY_PATH
+    export LD_LIBRARY_PATH=/work/softs/rh8/spack_install/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-compilers-2021.3.0-po2unejzdcprr7unoes754heiqovvwbw/compiler/2021.3.0/linux/lib/x64:$LD_LIBRARY_PATH
+    export LD_LIBRARY_PATH=/work/softs/rh8/spack_install/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-compilers-2021.3.0-po2unejzdcprr7unoes754heiqovvwbw/compiler/2021.3.0/linux/lib:$LD_LIBRARY_PATH
+    export MANPATH=/work/softs/rh8/spack_install/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-compilers-2021.3.0-po2unejzdcprr7unoes754heiqovvwbw/compiler/2021.3.0/documentation/en/man/common:$MANPATH
+    export PATH=/work/softs/rh8/spack_install/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-compilers-2021.3.0-po2unejzdcprr7unoes754heiqovvwbw/compiler/2021.3.0/linux/bin:$PATH
+    export PATH=/work/softs/rh8/spack_install/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-compilers-2021.3.0-po2unejzdcprr7unoes754heiqovvwbw/compiler/2021.3.0/linux/bin/intel64:$PATH
+    export PATH=/work/softs/rh8/spack_install/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-compilers-2021.3.0-po2unejzdcprr7unoes754heiqovvwbw/compiler/2021.3.0/linux/lib/oclfpga/bin:$PATH
+    export PATH=/work/softs/rh8/spack_install/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-compilers-2021.3.0-po2unejzdcprr7unoes754heiqovvwbw/compiler/2021.3.0/linux/lib/oclfpga/llvm/aocl-bin:$PATH
+
+    export INTEL_ONEAPI_COMPILERSHOME=/work/softs/rh8/spack_install/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-compilers-2021.3.0-po2unejzdcprr7unoes754heiqovvwbw
+    export I_MPI_CC=icc
+    export I_MPI_CXX=icpc
+    export I_MPI_FC=ifort
+    export I_MPI_F90=ifort
+    export I_MPI_F77=ifort
+    export CC=/work/softs/rh8/spack_install/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-compilers-2021.3.0-po2unejzdcprr7unoes754heiqovvwbw/compiler/latest/linux/bin/intel64/icc
+    export CXX=/work/softs/rh8/spack_install/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-compilers-2021.3.0-po2unejzdcprr7unoes754heiqovvwbw/compiler/latest/linux/bin/intel64/icpc
+    export FC=/work/softs/rh8/spack_install/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-compilers-2021.3.0-po2unejzdcprr7unoes754heiqovvwbw/compiler/latest/linux/bin/intel64/ifort
+
+	# Intel MPI
+    export PATH=/work/softs/rh8/spack_install_20/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-mpi-2021.10.0-a4vpkrrwo5bemjm5tfa2d57c4u6pbky7/bin:$PATH
+    export PKG_CONFIG_PATH=/work/softs/rh8/spack_install_20/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-mpi-2021.10.0-a4vpkrrwo5bemjm5tfa2d57c4u6pbky7/lib/pkgconfig:$PKG_CONFIG_PATH
+    export CMAKE_PREFIX_PATH=/work/softs/rh8/spack_install_20/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-mpi-2021.10.0-a4vpkrrwo5bemjm5tfa2d57c4u6pbky7/.:$CMAKE_PREFIX_PATH
+    export CLASSPATH=/work/softs/rh8/spack_install_20/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-mpi-2021.10.0-a4vpkrrwo5bemjm5tfa2d57c4u6pbky7/mpi/2021.10.0//lib/mpi.jar:$CLASSPATH
+    export CPATH=/work/softs/rh8/spack_install_20/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-mpi-2021.10.0-a4vpkrrwo5bemjm5tfa2d57c4u6pbky7/mpi/2021.10.0//include:$CPATH
+    export FI_PROVIDER_PATH=/work/softs/rh8/spack_install_20/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-mpi-2021.10.0-a4vpkrrwo5bemjm5tfa2d57c4u6pbky7/mpi/2021.10.0//libfabric/lib/prov:/usr/lib64/libfabric:$FI_PROVIDER_PATH
+    export LD_LIBRARY_PATH=/work/softs/rh8/spack_install_20/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-mpi-2021.10.0-a4vpkrrwo5bemjm5tfa2d57c4u6pbky7/mpi/2021.10.0//libfabric/lib:/work/softs/rh8/spack_install_20/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-mpi-2021.10.0-a4vpkrrwo5bemjm5tfa2d57c4u6pbky7/mpi/2021.10.0//lib/release:/work/softs/rh8/spack_install_20/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-mpi-2021.10.0-a4vpkrrwo5bemjm5tfa2d57c4u6pbky7/mpi/2021.10.0//lib:$LD_LIBRARY_PATH
+    export LIBRARY_PATH=/work/softs/rh8/spack_install_20/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-mpi-2021.10.0-a4vpkrrwo5bemjm5tfa2d57c4u6pbky7/mpi/2021.10.0//libfabric/lib:/work/softs/rh8/spack_install_20/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-mpi-2021.10.0-a4vpkrrwo5bemjm5tfa2d57c4u6pbky7/mpi/2021.10.0//lib/release:/work/softs/rh8/spack_install_20/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-mpi-2021.10.0-a4vpkrrwo5bemjm5tfa2d57c4u6pbky7/mpi/2021.10.0//lib:$LIBRARY_PATH
+    export MANPATH=/work/softs/rh8/spack_install_20/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-mpi-2021.10.0-a4vpkrrwo5bemjm5tfa2d57c4u6pbky7/mpi/2021.10.0/man:$MANPATH
+    export PKG_CONFIG_PATH=/work/softs/rh8/spack_install_20/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-mpi-2021.10.0-a4vpkrrwo5bemjm5tfa2d57c4u6pbky7/mpi/2021.10.0/lib/pkgconfig:$PKG_CONFIG_PATH
+    export PATH=/work/softs/rh8/spack_install_20/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-mpi-2021.10.0-a4vpkrrwo5bemjm5tfa2d57c4u6pbky7/mpi/2021.10.0//bin:$PATH
+    export PATH=/work/softs/rh8/spack_install_20/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-mpi-2021.10.0-a4vpkrrwo5bemjm5tfa2d57c4u6pbky7/mpi/2021.10.0//libfabric/bin:$PATH
+    export INTEL_ONEAPI_MPIHOME=/work/softs/rh8/spack_install_20/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-mpi-2021.10.0-a4vpkrrwo5bemjm5tfa2d57c4u6pbky7
+    export I_MPI_PMI_LIBRARY=/usr/lib64/libpmi.so
+    export FI_PROVIDER=MLX
+    export I_MPI_ROOT=/work/softs/rh8/spack_install_20/linux-rhel8-x86_64/gcc-8.5.0/intel-oneapi-mpi-2021.10.0-a4vpkrrwo5bemjm5tfa2d57c4u6pbky7/mpi/2021.10.0
+
+    # Set Makfile.inc
+    cat > /model/SYMPHONIE_v391/UDIR/NOK_MORA_v391/makefile.inc <<'EOF'
+F90=mpiifort
+CONF=NOK_MORA_v391
+COMP=IFORT
+COMPMOD=-module
+F77FLAGS= -O2 -traceback -fp-model precise
+LIB=-L/softs/netcdf/hdf5.146/intel2021/icc20/c/4.9.3/lib -lnetcdf -L/softs/netcdf/hdf5.146/intel2021/icc20/fortran/4.5.3/lib -lnetcdff -L/softs/parallel-netcdf/intel2021/icc20/1.13.0/lib -lpnetcdf -L/softs/hdf5/intel2021/icc20/1.14.6/lib -lhdf5 -lhdf5_hl
+NETINC=-I/softs/netcdf/hdf5.146/intel2021/icc20/c/4.9.3/include -I/softs/netcdf/hdf5.146/intel2021/icc20/fortran/4.5.3/include -I/softs/parallel-netcdf/intel2021/icc20/1.13.0/include -I/softs/hdf5/intel2021/icc20/1.14.6/include
+EOF
+
+    cd /model/SYMPHONIE_v391/UDIR/NOK_MORA_v391/
+    make -j 4
+
+    # Update permissions
+    chmod -R 755 /model/SYMPHONIE_v391
+
+    # Move fort.XXX to the config dir 
+    for i in $(seq 0 180); do
+       ln -s "/model/NOK_MORA_v391/RUN/fort.$i" "/model/SYMPHONIE_v391/RDIR/NOK_MORA_v391/fort.$i"
+    done
+
+    # Make sym link for tmp and restart dirs
+    rm -rf /model/SYMPHONIE_v391/RDIR/NOK_MORA_v391/tmp
+    ln -s /model/NOK_MORA_v391/RUN/tmp /model/SYMPHONIE_v391/RDIR/NOK_MORA_v391/tmp
+
+    rm -rf /model/SYMPHONIE_v391/RDIR/NOK_MORA_v391/restart_input
+    ln -s /model/NOK_MORA_v391/RUN/restart_input /model/SYMPHONIE_v391/RDIR/NOK_MORA_v391/restart_input
+
+    rm -rf /model/SYMPHONIE_v391/RDIR/NOK_MORA_v391/restart_output
+    ln -s /model/NOK_MORA_v391/RUN/restart_output /model/SYMPHONIE_v391/RDIR/NOK_MORA_v391/restart_output
+
+    rm -rf /model/SYMPHONIE_v391/RDIR/NOK_MORA_v391/restart_outbis
+    ln -s /model/NOK_MORA_v391/RUN/restart_outbis /model/SYMPHONIE_v391/RDIR/NOK_MORA_v391/restart_outbis
+
+
+
+
