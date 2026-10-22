@@ -27,11 +27,14 @@ from configbuilder.exception.FileError import FileError
 
 class NotebookBathy(FileTemplate):
 
-    def __init__(self,base_dir,texte250):
+    def __init__(self,base_dir,texte250,mangrove_file_name):
 
         FileTemplate.__init__(self, base_dir, "notebook_bathy.f");
         self.texte250 = None
         self.set_texte250(texte250)
+
+        self.mangrove_file_name = None
+        self.set_mangrove_file_name(mangrove_file_name)
 
     def set_texte250(self, value):
         # Check if file exist
@@ -43,6 +46,17 @@ class NotebookBathy(FileTemplate):
         else:
             raise FileError("NotebookBathy",
                             "Bathymetry file '" + value + "' doesn't exist", 1005)
+
+    def set_mangrove_file_name(self, value):
+        # Check if file exist
+        if os.path.isfile(value):
+            if len(value) > 100:
+                raise FileError("NotebookBathy",
+                                "Mangrove path location '" + value + "' is too long. Max 100 characters", 1005)
+            self.mangrove_file_name = value
+        else:
+            raise FileError("NotebookBathy",
+                            "Mangrove file '" + value + "' doesn't exist", 1005)
 
 
 

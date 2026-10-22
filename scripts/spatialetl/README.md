@@ -7,11 +7,18 @@
 Transform the land sea binary mask of the reference 2018 modelling to netCDF format.
 The land sea mask is useful to clip model outputs on wet areas.
 
-### 2. Transform SYMPHONIE modelling to geotiff format
+### 2. Transform SYMPHONIE modelling to COG format
 
-`symphonie_to_geotiff.py`
+`symphonie_to_cog.py`
 
-Transform outputs of SYMPHONIE modelling to geotiff format.
+Transform outputs of SYMPHONIE modelling to Cloud Optimized Geotiff format.
+
+`python symphonie_to_cog.py  \
+    --resolution-x 0.002 \
+    --resolution-y 0.002 \
+    --freq "daily average" \
+    --start-time "2018-11-02 17:16:00" \
+    --end-time "2018-11-02 17:16:00"`
 
 ### 3. Extract SYMPHONIE modelling to in-situ data
 
@@ -40,5 +47,10 @@ Compute the residence time of water from Lagangrian tracers.
 ## How to use
 
 ```bash
-docker run -v /XXXX/:/config -v ${PWD}:/script -w /script -it "scoast-nokoue:1.0" python scripts/symphonie_to_geotiff.py  
+docker run -v /XXXX/:/config -it "scoast-nokoue:1.0" python /app/spatialetl/symphonie_to_cog.py  \
+    --resolution-x 0.002 \
+    --resolution-y 0.002 \
+    --freq "daily average" \
+    --start-time "2018-11-02 17:16:00" \
+    --end-time "2018-11-02 17:16:00"  
 ```

@@ -12,10 +12,12 @@ class S26Nokoue(SymphonieConfig):
 
     def __init__(
             self,
+            config_name,
             output_dir,
             notebook_grid,
             bathycote_in_file,
             lonlatfile,
+            mangrove_file_name,
             meteo_forcing_dir,
             obc_forcing_dir,
             tide_forcing_dir,
@@ -26,7 +28,6 @@ class S26Nokoue(SymphonieConfig):
             start_time,
             end_time,
             run_mode=0,
-            config_name="NOK_MORA_v391",
             mpi_map_file_name=None,
             mpi_hole_plugging=None,
             model_source_dir=None,
@@ -55,7 +56,8 @@ class S26Nokoue(SymphonieConfig):
         # notebook_bathy
         nb = NotebookBathy(
             os.path.join(S26Nokoue.BASE_DIR, S26Nokoue.VERSION.lower(), "notebook"),
-            bathycote_in_file)
+            bathycote_in_file,
+            mangrove_file_name)
         self.notebooks["notebook_bathy"] = nb
 
         # notebook_bio
@@ -191,9 +193,19 @@ class S26Nokoue(SymphonieConfig):
 
     def generate(self, only_config=False, overwrite=False):
         SymphonieConfig.generate(self,only_config=only_config,overwrite=overwrite)
+
+        # Create RUN dir
         runDir = os.path.join(self.output_config_dir, self.config_name, "RUN")
         os.makedirs(runDir, exist_ok=True)
         os.makedirs(os.path.join(runDir, "tmp"), exist_ok=True)
         os.makedirs(os.path.join(runDir, "restart_input"), exist_ok=True)
         os.makedirs(os.path.join(runDir, "restart_output"), exist_ok=True)
         os.makedirs(os.path.join(runDir, "restart_outbis"), exist_ok=True)
+
+        # Create TRACERS dir
+        tracersDir = os.path.join(self.output_config_dir, self.config_name, "TRACERS")
+        os.makedirs(tracersDir, exist_ok=True)
+
+        # Create TODTF dir
+        dtfDir = os.path.join(self.output_config_dir, self.config_name, "TODTF")
+        os.makedirs(dtfDir, exist_ok=True)

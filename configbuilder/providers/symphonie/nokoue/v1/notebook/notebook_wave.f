@@ -4,19 +4,18 @@ iwve=0 ! 0: off / 1: on
 
 &notebook_wave2
 
-! txt_wavemodeltype='ww3_iowaga'    ! ww3 input field on native unstructured grid (interpolation requiered)
-  txt_wavemodeltype='ww3_on_sgrid'  ! ww3 input field at "w" location of the grid (no interpolation)
+txt_wavemodeltype='ww3_on_sgrid'  ! ww3 input field at "w" location of the grid (no interpolation)
 wave_obc_type=1                     ! wave obc type
 ww3_flagcumul=0                     ! wave model variables are 0=instantaneous 1=time-averaged
 
-texte80(1)='../../../{{ candidate.config_name }}/LIST/list_dir'
-texte80(2)='../../../{{ candidate.config_name }}/LIST/list_foc'
-texte80(3)='../../../{{ candidate.config_name }}/LIST/list_hs'
-texte80(4)='../../../{{ candidate.config_name }}/LIST/list_t'
-texte80(5)='../../../{{ candidate.config_name }}/LIST/list_taw'
-texte80(6)='../../../{{ candidate.config_name }}/LIST/list_two'
-texte80(7)='../../../{{ candidate.config_name }}/LIST/list_uss'
-texte80(8)='../../../{{ candidate.config_name }}/LIST/list_hsw'
+texte80(1)='../../../NOK_MORA_v391/LIST/list_dir'
+texte80(2)='../../../NOK_MORA_v391/LIST/list_foc'
+texte80(3)='../../../NOK_MORA_v391/LIST/list_hs'
+texte80(4)='../../../NOK_MORA_v391/LIST/list_t'
+texte80(5)='../../../NOK_MORA_v391/LIST/list_taw'
+texte80(6)='../../../NOK_MORA_v391/LIST/list_two'
+texte80(7)='../../../NOK_MORA_v391/LIST/list_uss'
+texte80(8)='../../../NOK_MORA_v391/LIST/list_hsw'
 !texte80(9)='../../../Nokoue/LIST/list_bhd' ! Bernouilli Head
 /
 

@@ -21,7 +21,11 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 from __future__ import division, print_function, absolute_import
+
+import os
+
 from configbuilder.builder.file_template import FileTemplate
+from configbuilder.exception import FileError
 
 
 class NotebookRivers(FileTemplate):
@@ -30,10 +34,27 @@ class NotebookRivers(FileTemplate):
 
         FileTemplate.__init__(self, base_dir, "notebook_rivers");
 
+        self.check_file_path_length(so_file)
         self.so_file = so_file
+
+        self.check_file_path_length(oueme_file)
         self.oueme_file = oueme_file
+
+        self.check_file_path_length(djonou_file)
         self.djonou_file = djonou_file
+
+        self.check_file_path_length(portonovo_file)
         self.portonovo_file = portonovo_file
+
+    def check_file_path_length(self, value):
+        # Check if file exist
+        if os.path.isfile(value):
+            if len(value) > 200:
+                raise FileError("NotebookRiver",
+                                "River discharge file location '" + value + "' is too long. Max 200 characters", 1005)
+        else:
+            raise FileError("NotebookBathy",
+                            "River discharge file location '" + value + "' doesn't exist", 1005)
 
 
 

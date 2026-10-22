@@ -43,7 +43,13 @@
 ! rho=   1026.74524                 
 
 ! STERIC EFFECT
-flag_steric_effect=0 ! Parametrization of the steric effect if flag_steric_effect=1 
+flag_steric_effect=0 ! Parametrization of the steric effect if flag_steric_effect=1
+
+! Min Max validity for temperature and salinity
+tem_validmin=-999.   ! -3.
+tem_validmax=999.    ! 40.
+sal_validmin=-999.   !  0.
+sal_validmax=999.    ! 40.
 
 /
 
