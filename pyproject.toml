@@ -20,7 +20,7 @@
 # SOFTWARE.
 [project]
 name = "scoast-nokoue"
-version = "0.0.1"
+version = "1.1"
 requires-python = ">=3.12"
 authors = [
   {name = "Fabien RÉTIF", email = "fabien.retif@snale.net"},

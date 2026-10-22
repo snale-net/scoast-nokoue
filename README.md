@@ -5,7 +5,7 @@ Package ``scoast-nokoue``
 
 ## Installation
 
-The docker image can be found on TREX : `/work/DTF/common/UC/SCOAST/NK/SYMPHONIE-v1.0/containers/scoast-nokoue-v1.0.tar`
+The docker image can be found on TREX : `/work/DTF/common/UC/SCOAST/NK/SYMPHONIE-v1.0/containers/scoast-nokoue-v1.1.tar`
 
 ## Scripts
 

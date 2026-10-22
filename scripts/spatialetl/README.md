@@ -47,7 +47,7 @@ Compute the residence time of water from Lagangrian tracers.
 ## How to use
 
 ```bash
-docker run -v /XXXX/:/config -it "scoast-nokoue:1.0" python /app/spatialetl/symphonie_to_cog.py  \
+docker run -v /XXXX/:/config -it "scoast-nokoue:1.1" python /app/spatialetl/symphonie_to_cog.py  \
     --resolution-x 0.002 \
     --resolution-y 0.002 \
     --freq "daily average" \

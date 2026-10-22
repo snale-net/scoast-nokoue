@@ -24,5 +24,5 @@ The land see mask polygon rasterized on the DEM can be found here : `/work/SCO/S
 
 ```bash
 cd scripts/bathtub
-docker  docker run -v /XXXX/:/dem -v /XXXX/:/config -v ${PWD}:/script -w /script -it "scoast-nokoue:1.0" python compute_flood_extent_on_dem.py
+docker  docker run -v /XXXX/:/dem -v /XXXX/:/config -v ${PWD}:/script -w /script -it "scoast-nokoue:1.1" python compute_flood_extent_on_dem.py
 ```
