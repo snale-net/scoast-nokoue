@@ -22,7 +22,6 @@
 # SOFTWARE.
 from __future__ import division, print_function, absolute_import
 
-import logging
 import os
 
 from configbuilder.builder.file_template import FileTemplate
@@ -33,10 +32,9 @@ class NotebookTide(FileTemplate):
 
     def __init__(self,base_dir,name,tide_forcing_dir):
 
-        FileTemplate.__init__(self, base_dir, "notebook_tide_reanalyses");
+        FileTemplate.__init__(self, base_dir, "notebook_tide");
         self.config_name = name
         self.tide_forcing_dir = None
-        self.tide_reanalysis_output_dir = None
         self.set_tide_forcing_dir(tide_forcing_dir)
 
     def set_tide_forcing_dir(self,value):
@@ -45,11 +43,6 @@ class NotebookTide(FileTemplate):
 
             if os.listdir(value):
                 self.tide_forcing_dir = value
-                self.tide_reanalysis_output_dir = os.path.join(self.tide_forcing_dir,self.config_name)
-
-                if not os.path.isdir(self.tide_reanalysis_output_dir):
-                    logging.info(f"Create the tide reanalysis output dir : {self.tide_reanalysis_output_dir}")
-                    os.mkdir(self.tide_reanalysis_output_dir)
             else:
                 raise DirectoryError("NotebookTide",
                                      "[Tide forcing directory] '" + value + "' is empty", 1005)

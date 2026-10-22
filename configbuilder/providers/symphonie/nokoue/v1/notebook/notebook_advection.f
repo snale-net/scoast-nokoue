@@ -1,43 +1,55 @@
 &notebook_advection
 
-! T & S advection scheme:
-      iadvec_ts=1      ! 1=Quickest (horizontal & vertical) 
-                       ! 2=Quickest (horizontal) and Centred  (vertical)
-                       ! 3=Quickest (horizontal) and Lax Wen. (vertical)
+! T & S horizontal advection scheme:
+      iadvec_ts_hor=3      ! 1=Quickest
+                           ! 2=Quickest-2
+                           ! 3=Split-Quickest
+! T & S vertical advection scheme:
+      iadvec_ts_ver=0      ! 0=C2
+                           ! 1=Quickest
+                           ! 2=Quickest-2
+                           ! 3=Split-Quickest
 
-flag_ts_effectivedensity=0 ! If =1 QUICK diffusivity is applied on the T,S effective density
+flag_limiteur_v=1          ! 1 si limiteur, 0 sinon
+flag_limiteur_h=1          ! 1 si limiteur, 0 sinon
+
+! QUICKEST diffusivity:
+! https://docs.google.com/document/d/1-4NdFRKCug7u4-reURBVsHOeHMtf5p_8RlCYDLwAZjA/edit
+!quick_coef=0.125  ! 1/8 or 1/6, in factor of the CURV term of the QUICKEST scheme
+ quick_coef=0.1667 ! 1/8 or 1/6, in factor of the CURV term of the QUICKEST scheme
+
+
+! Negative diffusion
+flag_negdif_hor=1            ! 1 or 0 = on or off
+alpha_negdif_hor=1.          ! ratio antidiffusion/diffusion
+beta_negdif_hor=0.           ! ratio antidiffusion/diffusion
+
+flag_negdif_ver=1            ! 1 or 0 = on or off
+alpha_negdif_ver=1.          ! ratio antidiffusion/diffusion
+beta_negdif_ver=0.           ! ratio antidiffusion/diffusion
+
+quick_filter_points=3        ! =0 =3 or =5 =number of points in the filter for vertical advection
+                             ! Note: use quick_filter_points=0 with iadvec_ts_ver=0
 
 ! Define an "upwind" T,S advection" area according to bathymetry (upw_hrange1,upw_hrange2) in meters
       upw_hrange1=2.    ! 100%   upwind scheme si h<upw_hrange1
       upw_hrange2=10.   ! 100% standard scheme si h>upw_hrange2
 
+
+! MOMENTUM
 ! Amplification factor of the bilaplacian viscosity
 ! https://docs.google.com/document/d/1VtN0Tp0FfiqZyr_L01QYtsZa47CmkMYnv6nizqnZhXc/edit
       cst_adv_vel=1.     ! Amplification factor of the bi-harmonic viscosity in INTERNAL mode
       biharm_2dfactor=1. ! Amplification factor of the bi-harmonic viscosity in EXTERNAL mode
-      biharm_c1=0.02     ! Ratio of bi-harmonic viscosity scheme (scheme1=constant, scheme2=velocity gradient)
-                         ! biharm_c1=1   : scheme 1: bi-harmonic viscosity is constant
-                         ! biharm_c1=0   : scheme 2: bi-harmonic viscosity is "velocity-gradient" dependent
-                         ! 0<biharm_c1<1 : linear mixing of scheme1 and scheme2
 
 ! External mode: advection scheme of depth-averaged velocities in external mode
 ! https://docs.google.com/document/d/1U7DDLl9p1BZzG5NVgp4VWQ1Y6Y0if7Pt7bOjpr5GkfE/edit
-      flag_adve2d=0      ! 0=c4+biharm , 1=upwind
-
-! Coupling external and internal modes with momentum advection
-! https://docs.google.com/document/d/1U7DDLl9p1BZzG5NVgp4VWQ1Y6Y0if7Pt7bOjpr5GkfE/edit
-      flag_timesplitting_adve_uv=0 ! 0=coupling with u'u' (only)
-                                   ! 1=coupling with depth-averaged total advection (+ delta of barotropic advection)
+      flag_adve2d=2 ! 0=c4+biharm (version1) , 1=upwind , 2=QK1
+! Internal mode: advection scheme for baroclinic velocities
+      flag_adve3d=2 ! 0=c4+biharm (version1) , 1=upwind , 2=QK1 , 3=QK2
 
 ! Advection scheme for biogeochemical and passive tracers
       iadvec_bio=3     ! 3 = QUICKEST
-
-      substep_advbio=1 ! Maximum number of sub time steps of vertical explicit advection
-                       ! for passive tracer 
-
-      flag_rmnegval=2  ! O = do not remove negative values 
-                       ! 1 = use the negative values remover scheme 1
-                       ! 2 = use the negative values remover scheme 2
 
 ! Cancel advection of biogeochemical and passive tracers in lateral border
 ! layers. Define the size (grid point number) of the 4 lateral BL:
@@ -48,7 +60,9 @@ flag_ts_effectivedensity=0 ! If =1 QUICK diffusivity is applied on the T,S effec
 
 ! Central points of upwind zones
 ! https://docs.google.com/document/d/1djA4xtqN5U-kf0c0ezLFCydew2Ln4VrcIBjUh8G-dAs/edit
- texte250='none'
-!texte250='../../../REGION/BATHYMASK/central_points_of_upwind_zones.txt'
+ upwindzone_file='none'
+!upwindzonefile='../../../NOK_MORA_v391/BATHYMASK/central_points_of_upwind_zones.txt'
+
+looplimit_hor=100
 
 /

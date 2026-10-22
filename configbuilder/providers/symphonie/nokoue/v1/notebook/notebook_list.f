@@ -4,7 +4,7 @@
 !https://docs.google.com/document/d/1TRF8uYjsVen8EiY0rERHw3YxiofZmpZ6cH_sEhWiMwA/edit?usp=sharing
 
 ! DIRECTORY
-directory='../../../{{ candidate.config_name }}/NOTEBOOK'              ! Directory of the notebooks
+directory='../../../NOK_MORA_v391/NOTEBOOK'              ! Directory of the notebooks
 
 ! TIME
 nomfichier(1)='notebook_time.f'                   ! Departure/End time of the runs, time steps,...
@@ -19,8 +19,7 @@ nomfichier(4) ='notebook_rivers'                  ! RIVERS
 nomfichier(7) ='notebook_airseaflux_ecmwf_s26.f'  ! METEO
 nomfichier(8) ='notebook_obcforcing_nemo.f'       ! OGCM
 nomfichier(22)='notebook_wave.f'                  ! WAVES
-!nomfichier(11)='notebook_tide'                    ! TIDES
-nomfichier(11)='notebook_tide_reanalyses'         ! TIDES
+nomfichier(11)='notebook_tide'                    ! TIDES
 
 ! I/O
 nomfichier(20)='notebook_offline.f'               ! Offline files

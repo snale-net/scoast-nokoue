@@ -8,9 +8,9 @@
 light_rat1=0.58       ! A1
 light_att1=0.35       ! par1 (m)
 
-light_rat2=0.42       ! A2=1-A1 
-light_att2=23.        ! par2 (m) 
-!texte250='../../../Nokoue/BATHYMASK/symphonie-symtools-comodo.nc' ! lon-lat-dependent from file
+light_rat2=0.42       ! A2=1-A1
+light_att2=5.         ! par2 (m)
+!texte250='../../../NOK_MORA_v391/BATHYMASK/symphonie-symtools-comodo.nc' ! lon-lat-dependent from file
 ! light_att2_val1=10. 
 ! light_att2_h1=0.    ! light_att2=light_att2_val1 if h<light_att2_h1
 ! light_att2_val2=20. 

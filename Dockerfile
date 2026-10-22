@@ -35,6 +35,7 @@ FROM spatialetl:0.2.2 AS prod
 
 # Copy the environment, but not the source code
 COPY --from=python-builder --chown=app:app /app/.venv /app/.venv
+COPY --from=python-builder --chown=app:app /app/scripts /app/
 
 ENV PATH="/app/.venv/bin:$PATH"
 

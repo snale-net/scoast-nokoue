@@ -29,7 +29,7 @@ description = "Data transformation scripts for Nokoue modelling"
 readme = "README.md"
 
 dependencies = [
-    "spatialetl>=0.2.0",
+    "spatialetl>=0.2.2",
     "spatialetl-providers-common-interpcgal>=0.1",
     "spatialetl-providers-symphonie>=0.0.1",
     "spatialetl-providers-common-gdal>=0.0.1",

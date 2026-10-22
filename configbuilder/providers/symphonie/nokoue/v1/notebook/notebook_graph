@@ -1,6 +1,6 @@
 ********************************************************************************
 Output fields for graphics:
-../../../{{ candidate.config_name }}/GRAPHIQUES/                                       DIRGRAPH
+../../../NOK_MORA_v391/GRAPHIQUES/                                       DIRGRAPH
 100 ! dim_varid
 1   ! 1> regular in time  2> dates defined in notebook_dateoutput    IDATE_OUTPUT
 0.02   !0.02  ! gives the periodicity (in days) if the previous line = 1

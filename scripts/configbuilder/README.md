@@ -46,5 +46,8 @@ mpirun -np 180 singularity exec --pwd /model/SYMPHONIE_v391/RDIR/NOK_MORA_v391 \
 
 ```bash
 cd scripts/configbuilder
-docker run -v /XXXX/grid/:/XXXX/grid  -v /XXXX/forcings/:/XXXX/forcings/  -v /XXXX/config/:/XXXX/config/ -v ${PWD}:/script -w /script -it "scoast-nokoue:1.0" python generate_ref2018.py 
+
+docker run -v /XXXX/grid/:/XXXX/grid  -v /XXXX/forcings/:/XXXX/forcings/  -v /XXXX/config/:/XXXX/config/ -v ${PWD}:/script -w /script -it "scoast-nokoue:1.0" python generate_ref2018.py
+
+singularity exec --bind /work/DTF/common/UC/SCOAST/NK/SYMPHONIE-v1.0/grid --bind /work/SCO/SCOAST/NOKOUE/RAW/forcings --bind /work/DTF/common/UC/SCOAST/NK/SYMPHONIE-v1.0/configurations --bind ${PWD}:/script --pwd /script /work/DTF/common/UC/SCOAST/NK/SYMPHONIE-v1.0/containers/scoast-nokoue-v1.0.sif python generate_ref2018.py 
 ```
