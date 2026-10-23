@@ -14,11 +14,15 @@ The land sea mask is useful to clip model outputs on wet areas.
 Transform outputs of SYMPHONIE modelling to Cloud Optimized Geotiff format.
 
 `python symphonie_to_cog.py  \
-    --resolution-x 0.002 \
-    --resolution-y 0.002 \
+    -g /XXX/grid.nc \
+    -d /XXX/REF2018 \
+    -o /XXX/outputs \
+    --x_res 0.002 \
+    --y_res 0.002 \
     --freq "daily average" \
     --start-time "2018-11-02 17:16:00" \
-    --end-time "2018-11-02 17:16:00"`
+    --end-time "2018-11-02 17:16:00" \    
+    --sea_surface_height`
 
 ### 3. Extract SYMPHONIE modelling to in-situ data
 
@@ -47,10 +51,14 @@ Compute the residence time of water from Lagangrian tracers.
 ## How to use
 
 ```bash
-docker run -v /XXXX/:/config -it "scoast-nokoue:1.1" python /app/spatialetl/symphonie_to_cog.py  \
-    --resolution-x 0.002 \
-    --resolution-y 0.002 \
+docker run -v /XXXX/:/config -it "scoast-nokoue:1.2" python /app/spatialetl/symphonie_to_cog.py  \
+    -g /XXX/grid.nc \
+    -d /XXX/REF2018 \
+    -o /XXX/outputs \
+    --x_res 0.002 \
+    --y_res 0.002 \
     --freq "daily average" \
     --start-time "2018-11-02 17:16:00" \
-    --end-time "2018-11-02 17:16:00"  
+    --end-time "2018-11-02 17:16:00" \    
+    --sea_surface_height 
 ```

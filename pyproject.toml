@@ -20,7 +20,7 @@
 # SOFTWARE.
 [project]
 name = "scoast-nokoue"
-version = "1.1"
+version = "1.2"
 requires-python = ">=3.12"
 authors = [
   {name = "Fabien RÉTIF", email = "fabien.retif@snale.net"},
@@ -32,7 +32,7 @@ dependencies = [
     "spatialetl>=0.2.2",
     "spatialetl-providers-common-interpcgal>=0.1",
     "spatialetl-providers-symphonie>=0.0.1",
-    "spatialetl-providers-common-gdal>=0.0.1",
+    "spatialetl-providers-common-gdal>=0.0.2",
     "model-configbuilder==0.1.0",
     "model-configbuilder-providers-symphonie==0.1",
     "numba==0.68.0",

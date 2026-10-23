@@ -9,6 +9,11 @@ from numba import njit
 from osgeo import gdal, ogr
 from scipy.ndimage import convolve, distance_transform_edt
 import logging
+from affine import Affine
+from rasterio.features import shapes
+from shapely.geometry import shape
+from shapely.ops import unary_union
+import geopandas as gpd
 
 
 def read_img(filename, is_convert_nan=True, is_verbose=False, tofloat_16=False):
@@ -61,6 +66,80 @@ def write_img(file_path, im_proj, im_geotrans, im_data, dtype=None, nodata=None)
             if nodata:
                 dataset.GetRasterBand(i + 1).SetNoDataValue(nodata)
     del dataset
+
+def write_cog(file_path, im_proj, im_geotrans, im_data, dtype=None, nodata=None):
+    if dtype is None:
+        if 'int8' in im_data.dtype.name:
+            datatype = gdal.GDT_Byte
+        elif 'int16' in im_data.dtype.name:
+            datatype = gdal.GDT_UInt16
+        else:
+            datatype = gdal.GDT_Float32
+    else:
+        datatype = dtype
+
+    if len(im_data.shape) == 2:
+        im_bands, (im_height, im_width) = 1, im_data.shape
+    else:
+        im_bands, im_height, im_width = im_data.shape
+
+    driver = gdal.GetDriverByName("MEM")
+    dataset = driver.Create("", im_width, im_height, im_bands, datatype)
+    dataset.SetGeoTransform(im_geotrans)
+    dataset.SetProjection(im_proj)
+
+    if im_bands == 1:
+        dataset.GetRasterBand(1).WriteArray(im_data)
+        if nodata:
+            dataset.GetRasterBand(1).SetNoDataValue(nodata)
+    else:
+        for i in range(im_bands):
+            dataset.GetRasterBand(i + 1).WriteArray(im_data[i])
+            if nodata:
+                dataset.GetRasterBand(i + 1).SetNoDataValue(nodata)
+
+    gdal.Translate(
+        file_path,
+        dataset,
+        format="COG",
+        creationOptions=[
+            "COMPRESS=DEFLATE",
+            "PREDICTOR=FLOATING_POINT",
+            "BLOCKSIZE=512",
+            "OVERVIEWS=AUTO",
+            "BIGTIFF=IF_SAFER",
+        ],
+    )
+
+    del dataset
+
+def write_flood_extent_to_parquet(file_path, im_proj, im_geotrans, im_data):
+    mask = ~np.isnan(im_data)
+
+    # Convert GDAL geotransform to Affine
+    transform = Affine.from_gdal(*im_geotrans)
+
+    polygons = [
+        shape(geom)
+        for geom, value in shapes(
+            mask.astype(np.uint8),
+            mask=mask,
+            transform=transform,
+            connectivity=4
+        )
+        if value == 1
+    ]
+
+    merged = unary_union(polygons)
+
+    # Create GeoDataFrame and save
+    gdf = gpd.GeoDataFrame(
+        {"id": [1]},
+        geometry=[merged],
+        crs=im_proj
+    )
+
+    gdf.to_parquet(file_path, index=False)
 
 
 def pixel_to_xy(gt, cols, rows):

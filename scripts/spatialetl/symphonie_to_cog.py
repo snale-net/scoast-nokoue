@@ -19,6 +19,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 import argparse
+import os
 from datetime import timedelta, datetime
 
 import time
@@ -33,13 +34,29 @@ def parse_args():
     parser = argparse.ArgumentParser()
 
     parser.add_argument(
-        "--resolution-x",
+        "-g", "--grid_path",
+        type=str,
+        help="Path to the grid file",
+        required=True,
+        default="/config/OFFLINE/grid.nc"
+    )
+
+    parser.add_argument(
+        "-d", "--graphique_folder",
+        type=str,
+        help="Path to the graphique folder",
+        required=True,
+        default="/config/GRAPHIQUES"
+    )
+
+    parser.add_argument(
+        "--x_res",
         type=float,
         default=0.0002,
         help="Target longitude resolution (default : 0.0002)",
     )
     parser.add_argument(
-        "--resolution-y",
+        "--y_res",
         type=float,
         default=0.0002,
         help="Target latitude resolution (défault : 0.0002)",
@@ -56,14 +73,27 @@ def parse_args():
         "--start-time",
         type=datetime.fromisoformat,
         default=datetime.fromisoformat("2018-01-01 00:00:00"),
-        help="Date de début (format : YYYY-MM-DD HH:MM:SS)",
+        help="Start datetime (format : YYYY-MM-DD HH:MM:SS)",
     )
     parser.add_argument(
         "--end-time",
         type=datetime.fromisoformat,
         default=datetime.fromisoformat("2019-01-01 00:00:00"),
-        help="Date de fin (format : YYYY-MM-DD HH:MM:SS)",
+        help="End datetime (format : YYYY-MM-DD HH:MM:SS)",
     )
+
+    parser.add_argument(
+        "-o", "--output_folder",
+        type=str,
+        help="Path to the folder where the results are stored (default: ./outputs)",
+        default="./outputs"
+    )
+
+    parser.add_argument("--sea_surface_height", "-ssh", required=False, action="store_true", help="Compute sea surface height above mean sea level")
+
+    parser.add_argument("--sea_surface_salinity", required=False, action="store_true", help="Compute sea surface salinity")
+
+    parser.add_argument("--sea_ground_salinity", required=False, action="store_true", help="Compute sea water salinity at ground level")
 
     return parser.parse_args()
 
@@ -85,23 +115,27 @@ if __name__ == "__main__":
         freq=args.freq
 
     # Read SYMPHONIE data
-    reader = CoverageReader('/config/OFFLINE/grid.nc',
-                            '/config/GRAPHIQUES')
+    reader = CoverageReader(args.grid_path, args.graphique_folder)
 
     coverage = TimeCoverage(
         reader,
-        resolution_x=args.resolution_x,
-        resolution_y=args.resolution_y,
+        resolution_x=args.x_res,
+        resolution_y=args.y_res,
         freq=freq,
         start_time=args.start_time,
         end_time=args.end_time,
         nb_thread=12);
 
-    writer = COGWriter(coverage, '/config/TODTF/')
+    os.makedirs(args.output_folder, exist_ok=True)
+    writer = COGWriter(coverage, args.output_folder)
 
-    writer.write_variable_sea_surface_height_above_mean_sea_level()
-    writer.write_variable_sea_surface_salinity()
-    writer.write_variable_sea_water_salinity_at_ground_level()
+    if args.sea_surface_height:
+        writer.write_variable_sea_surface_height_above_mean_sea_level()
+    if args.sea_surface_salinity:
+        writer.write_variable_sea_surface_salinity()
+    if args.sea_ground_salinity:
+        writer.write_variable_sea_water_salinity_at_ground_level()
+
     writer.close()
 
     stop_time = time.time()
