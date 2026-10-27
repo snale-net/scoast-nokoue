@@ -23,7 +23,7 @@ The land see mask polygon rasterized on the DEM can be found here : `/work/SCO/S
 ## How to use
 
 ```bash
-docker  docker run -v /XXXX/:/dem -v /XXXX/:/config -it "scoast-nokoue:1.2" python /app/bathtub/compute_flood_extent_on_dem.py \
+docker  docker run -v /XXXX/:/dem -v /XXXX/:/config -it "scoast-nokoue:1.3" python /app/bathtub/compute_flood_extent_on_dem.py \
   --dem_path /dem/mns_pleiades_test_4326.tif  \
   --mask_path /dem/flood_nokoue_mask.tif \
   --output_folder /config/TODTF \

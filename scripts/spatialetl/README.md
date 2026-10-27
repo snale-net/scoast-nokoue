@@ -34,7 +34,15 @@ Extract data from the SYMPHONIE modelling at in-situ data observations and store
 
 `observations_to_coverage.py`
 
-Transform in-situ data from Matlab to tiff format with an objective interpolation.
+Transform in-situ data from Matlab to COG format with an objective interpolation.
+
+`python observations_to_coverage.py  \
+    -i /XXX/NOK_CTD_PROF_201811.mat,
+    -i /XXX/NOK_CTD_PROF_201812.mat \
+    -m /XXX/NOK_sea_binary_mask.nc \
+    -o /XXX/outputs \
+    --sea_surface_salinity \
+    --sea_ground_salinity`
 
 ### 5. Compute residence time from Eulerian tracers
 
@@ -51,7 +59,7 @@ Compute the residence time of water from Lagangrian tracers.
 ## How to use
 
 ```bash
-docker run -v /XXXX/:/config -it "scoast-nokoue:1.2" python /app/spatialetl/symphonie_to_cog.py  \
+docker run -v /XXXX/:/config -it "scoast-nokoue:1.3" python /app/spatialetl/symphonie_to_cog.py  \
     -g /XXX/grid.nc \
     -d /XXX/REF2018 \
     -o /XXX/outputs \
