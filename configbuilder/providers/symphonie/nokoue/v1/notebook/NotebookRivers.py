@@ -54,7 +54,7 @@ class NotebookRivers(FileTemplate):
                                 "River discharge file location '" + value + "' is too long. Max 200 characters", 1005)
         else:
             raise FileError("NotebookBathy",
-                            "River discharge file location '" + value + "' doesn't exist", 1005)
+                            "River discharge file '" + value + "' doesn't exist", 1005)
 
 
 

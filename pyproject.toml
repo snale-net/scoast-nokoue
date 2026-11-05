@@ -31,7 +31,7 @@ readme = "README.md"
 dependencies = [
     "spatialetl>=0.2.2",
     "spatialetl-providers-common-interpcgal>=0.1",
-    "spatialetl-providers-symphonie>=0.0.1",
+    "spatialetl-providers-symphonie>=0.0.2",
     "spatialetl-providers-common-gdal>=0.0.2",
     "model-configbuilder==0.1.0",
     "model-configbuilder-providers-symphonie==0.1",

@@ -37,7 +37,7 @@ Extract data from the SYMPHONIE modelling at in-situ data observations and store
 Transform in-situ data from Matlab to COG format with an objective interpolation.
 
 `python observations_to_coverage.py  \
-    -i /XXX/NOK_CTD_PROF_201811.mat,
+    -i /XXX/NOK_CTD_PROF_201811.mat \ 
     -i /XXX/NOK_CTD_PROF_201812.mat \
     -m /XXX/NOK_sea_binary_mask.nc \
     -o /XXX/outputs \

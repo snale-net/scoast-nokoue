@@ -35,7 +35,7 @@ from spatialetl.coverage.io.coverage_reader import CoverageReader
 from spatialetl.coverage.time_coverage import TimeCoverage
 from spatialetl.utils.logger import logging
 
-from nokoue.operator.interpolator import objective_analysis
+from spatialetl.providers.nokoue.operator.interpolator import objective_analysis
 
 
 class CTDProfilReader(CoverageReader):
@@ -169,10 +169,10 @@ class CTDProfilReader(CoverageReader):
     def read_axis_t(self, tmin, tmax, timestamp):
 
         if timestamp == 1:
-            return [(t - TimeCoverage.TIME_DATUM).total_seconds() \
-                    for t in self.times[tmin:tmax]];
+            return np.asarray([(t - TimeCoverage.TIME_DATUM).total_seconds() \
+                    for t in self.times[tmin:tmax]]);
         else:
-            return self.times[tmin:tmax]
+            return np.asarray(self.times[tmin:tmax])
 
     # Variables
     def read_variable_longitude(self, xmin, xmax, ymin, ymax):

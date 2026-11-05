@@ -64,7 +64,7 @@ Note: the related subroutines are graph_out.F90 and netcdf.F90
 1  Potential temperature                                  1
 1  Salinity                                               2
 0  Potential density                                      3
-0  Passive tracers                                        4
+{{ candidate.enable_tracers }}  Passive tracers                                        4
 0  OGCM forcing potential temperature (temobc)            5
 0  OGCM forcing salinity (salobc)                         6
 0  Forcing bio field in the nudging area                  7

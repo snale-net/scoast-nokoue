@@ -26,10 +26,15 @@ from configbuilder.builder.file_template import FileTemplate
 
 class NotebookGraph(FileTemplate):
 
-    def __init__(self,base_dir,name):
+    def __init__(self,base_dir,name,enalbe_tracers=False):
 
         FileTemplate.__init__(self, base_dir, "notebook_graph");
         self.config_name = name
+
+        if enalbe_tracers:
+            self.enable_tracers = 1
+        else:
+            self.enable_tracers = 0
 
 
 

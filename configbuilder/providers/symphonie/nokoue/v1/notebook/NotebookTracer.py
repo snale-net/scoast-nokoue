@@ -21,14 +21,45 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 from __future__ import division, print_function, absolute_import
+
+from datetime import timedelta
+
+from dateutil.relativedelta import relativedelta
+
 from configbuilder.builder.file_template import FileTemplate
 
 
 class NotebookTracer(FileTemplate):
 
-    def __init__(self,base_dir):
+    def __init__(self, base_dir, let_out_count=0, let_out_freq="BMM", start_time=None):
 
         FileTemplate.__init__(self, base_dir, "notebook_tracer.f");
 
+        if let_out_count > 0 and start_time is not None:
+            self.enable = 1
+            self.let_out_count = let_out_count
+            # Compute date and index of tracers let out from the start time
+            dates = []
+            for i in range(let_out_count):
+                if let_out_freq == "BOM":
+                    date = start_time.replace(day=1) + relativedelta(months=i)
+                elif let_out_freq == "MOM":
+                    date = start_time.replace(day=15) + relativedelta(months=i)
+                elif let_out_freq == "BMM":
+                    date = start_time + relativedelta(
+                        months=i // 2,
+                        days=14 * (i % 2)
+                    )
+                dates.append(date)
 
-
+            self.tracers_map = {
+                i + 1: {
+                    "start": date - timedelta(minutes=1),
+                    "end": date + timedelta(seconds=10),
+                }
+                for i, date in enumerate(dates)
+            }
+        else:
+            self.enable = 0
+            self.let_out_count = 0
+            self.tracers_map = {}

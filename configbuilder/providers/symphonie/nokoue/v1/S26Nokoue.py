@@ -31,6 +31,8 @@ class S26Nokoue(SymphonieConfig):
             mpi_map_file_name=None,
             mpi_hole_plugging=None,
             model_source_dir=None,
+            tracers_let_out_count=0,
+            tracers_let_out_freq="BMM"
     ):
         SymphonieConfig.__init__(self, model_source_dir, output_dir, config_name);
 
@@ -88,7 +90,9 @@ class S26Nokoue(SymphonieConfig):
         # notebook_graph
         nb = NotebookGraph(
             os.path.join(S26Nokoue.BASE_DIR, S26Nokoue.VERSION.lower(), "notebook"),
-            self.config_name)
+            self.config_name,
+            enalbe_tracers=True if tracers_let_out_count > 0 else False
+        )
         self.notebooks["notebook_graph"] = nb
 
         # notebook_grid
@@ -171,7 +175,11 @@ class S26Nokoue(SymphonieConfig):
 
         # notebook_tracer
         nb = NotebookTracer(
-            os.path.join(S26Nokoue.BASE_DIR, S26Nokoue.VERSION.lower(), "notebook"))
+            os.path.join(S26Nokoue.BASE_DIR, S26Nokoue.VERSION.lower(), "notebook"),
+            let_out_count=tracers_let_out_count,
+            let_out_freq=tracers_let_out_freq,
+            start_time=start_time
+        )
         self.notebooks["notebook_tracer"] = nb
 
         # notebook_vertcoord
@@ -201,10 +209,6 @@ class S26Nokoue(SymphonieConfig):
         os.makedirs(os.path.join(runDir, "restart_input"), exist_ok=True)
         os.makedirs(os.path.join(runDir, "restart_output"), exist_ok=True)
         os.makedirs(os.path.join(runDir, "restart_outbis"), exist_ok=True)
-
-        # Create TRACERS dir
-        tracersDir = os.path.join(self.output_config_dir, self.config_name, "TRACERS")
-        os.makedirs(tracersDir, exist_ok=True)
 
         # Create TODTF dir
         dtfDir = os.path.join(self.output_config_dir, self.config_name, "TODTF")

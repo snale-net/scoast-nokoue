@@ -33,7 +33,7 @@ class NotebookBathy(FileTemplate):
         self.texte250 = None
         self.set_texte250(texte250)
 
-        self.mangrove_file_name = None
+        self.mangrove_file_name = 'none'
         self.set_mangrove_file_name(mangrove_file_name)
 
     def set_texte250(self, value):
@@ -48,15 +48,16 @@ class NotebookBathy(FileTemplate):
                             "Bathymetry file '" + value + "' doesn't exist", 1005)
 
     def set_mangrove_file_name(self, value):
-        # Check if file exist
-        if os.path.isfile(value):
-            if len(value) > 100:
+        if value is not None:
+            # Check if file exist
+            if os.path.isfile(value):
+                if len(value) > 100:
+                    raise FileError("NotebookBathy",
+                                    "Mangrove path location '" + value + "' is too long. Max 100 characters", 1005)
+                self.mangrove_file_name = value
+            else:
                 raise FileError("NotebookBathy",
-                                "Mangrove path location '" + value + "' is too long. Max 100 characters", 1005)
-            self.mangrove_file_name = value
-        else:
-            raise FileError("NotebookBathy",
-                            "Mangrove file '" + value + "' doesn't exist", 1005)
+                                "Mangrove file '" + value + "' doesn't exist", 1005)
 
 
 
