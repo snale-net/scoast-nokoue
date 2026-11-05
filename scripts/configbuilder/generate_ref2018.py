@@ -19,11 +19,10 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 import argparse
-from datetime import datetime
 import logging
 import os
-import sys
-sys.path.append(".")
+from datetime import datetime
+
 from configbuilder.providers.symphonie.nokoue.v1.S26Nokoue import S26Nokoue
 
 
