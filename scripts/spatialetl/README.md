@@ -50,6 +50,18 @@ Transform in-situ data from Matlab to COG format with an objective interpolation
 
 Compute the residence time of water from Eulerian tracers.
 
+`python symphonie_eulerian_residence_time.py  \
+    -g /XXX/grid.nc \
+    -d /XXX/REF2018 \
+    -o /XXX/outputs \    
+    --let_out_count 24 \
+    --let_out_freq BMM \
+    --max_duration 160 \
+    --x_res 0.002 \
+    --y_res 0.002
+    --sea_surface_residence_time \
+    --sea_ground_residence_time`
+
 ### 6. Compute residence time from Lagrangian tracers
 
 `symphonie_lagrangian_residence_time.py`

@@ -71,8 +71,8 @@ def get_parser():
     parser.add_argument(
         "--msl_folder",
         type=str,
-        help="Path to the folder where the sea surface height above mean sea level results are stored (default: ./outputs)",
-        default="./outputs"
+        help="Path to the folder where the sea surface height above mean sea level results are stored",
+        required=True,
     )
 
     parser.add_argument(
