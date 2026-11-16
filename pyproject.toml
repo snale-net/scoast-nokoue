@@ -36,6 +36,7 @@ dependencies = [
     "model-configbuilder==0.1.0",
     "model-configbuilder-providers-symphonie==0.1",
     "numba==0.68.0",
+    "matplotlib==3.11.2"
 ]
 
 [tool.uv.sources]
