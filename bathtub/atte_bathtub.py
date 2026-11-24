@@ -2,18 +2,18 @@
 # Forked from https://github.com/geoye/attenuated_bathtub
 # Adapted and Optimized with Numba
 
+import logging
 from queue import Queue
 
+import geopandas as gpd
 import numpy as np
+from affine import Affine
 from numba import njit
 from osgeo import gdal, ogr
-from scipy.ndimage import convolve, distance_transform_edt
-import logging
-from affine import Affine
 from rasterio.features import shapes
+from scipy.ndimage import convolve, distance_transform_edt
 from shapely.geometry import shape
 from shapely.ops import unary_union
-import geopandas as gpd
 
 
 def read_img(filename, is_convert_nan=True, is_verbose=False, tofloat_16=False):
@@ -113,6 +113,7 @@ def write_cog(file_path, im_proj, im_geotrans, im_data, dtype=None, nodata=None)
 
     del dataset
 
+
 def write_flood_extent_to_parquet(file_path, im_proj, im_geotrans, im_data):
     mask = ~np.isnan(im_data)
 
@@ -131,11 +132,12 @@ def write_flood_extent_to_parquet(file_path, im_proj, im_geotrans, im_data):
     ]
 
     merged = unary_union(polygons)
+    simplified = merged.simplify(min(abs(transform.a),abs(transform.e)), preserve_topology=True)
 
     # Create GeoDataFrame and save
     gdf = gpd.GeoDataFrame(
         {"id": [1]},
-        geometry=[merged],
+        geometry=[simplified],
         crs=im_proj
     )
 

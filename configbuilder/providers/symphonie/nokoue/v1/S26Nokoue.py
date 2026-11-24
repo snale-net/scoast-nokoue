@@ -31,6 +31,7 @@ class S26Nokoue(SymphonieConfig):
             mpi_map_file_name=None,
             mpi_hole_plugging=None,
             model_source_dir=None,
+            tracers_first_let_out_start_time=None,
             tracers_let_out_count=0,
             tracers_let_out_freq="BMM"
     ):
@@ -178,7 +179,7 @@ class S26Nokoue(SymphonieConfig):
             os.path.join(S26Nokoue.BASE_DIR, S26Nokoue.VERSION.lower(), "notebook"),
             let_out_count=tracers_let_out_count,
             let_out_freq=tracers_let_out_freq,
-            start_time=start_time
+            start_time=tracers_first_let_out_start_time if tracers_first_let_out_start_time is not None else start_time
         )
         self.notebooks["notebook_tracer"] = nb
 
@@ -206,10 +207,15 @@ class S26Nokoue(SymphonieConfig):
         runDir = os.path.join(self.output_config_dir, self.config_name, "RUN")
         os.makedirs(runDir, exist_ok=True)
         os.makedirs(os.path.join(runDir, "tmp"), exist_ok=True)
+        open(os.path.join(runDir, "tmp", ".gitkeep"), "a").close()
         os.makedirs(os.path.join(runDir, "restart_input"), exist_ok=True)
+        open(os.path.join(runDir, "restart_input", ".gitkeep"), "a").close()
         os.makedirs(os.path.join(runDir, "restart_output"), exist_ok=True)
+        open(os.path.join(runDir, "restart_output", ".gitkeep"), "a").close()
         os.makedirs(os.path.join(runDir, "restart_outbis"), exist_ok=True)
+        open(os.path.join(runDir, "restart_outbis", ".gitkeep"), "a").close()
 
         # Create TODTF dir
         dtfDir = os.path.join(self.output_config_dir, self.config_name, "TODTF")
         os.makedirs(dtfDir, exist_ok=True)
+        open(os.path.join(self.output_config_dir, self.config_name, "TODTF", ".gitkeep"), "a").close()

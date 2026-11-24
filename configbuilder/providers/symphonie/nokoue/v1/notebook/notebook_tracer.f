@@ -26,8 +26,8 @@ TauR(1)=1000000.
  socard( 3,{{ index }})=1     ! b
  socard( 4,{{ index }})=10    ! c
 ! tracers concerned (min & max number)
- socard( 5,{{ index }})=1     ! tracers min number
- socard( 6,{{ index }})=1     ! tracers max number
+ socard( 5,{{ index }})={{ index }}     ! tracers min number
+ socard( 6,{{ index }})={{ index }}     ! tracers max number
  socard( 7,{{ index }})=0.001 ! Production term (per second)
 ! Dates:
  sodate(1:6,1,{{ index }})={{ item.start.strftime('%Y , %m , %d , %H , %M , %S') }} ! Start time (yyyy mm dd hh mm ss)

@@ -85,6 +85,5 @@ if __name__ == "__main__":
     writer.write_variable_sea_water_salinity()
     writer.close()
 
-    stop_time = time.time()
     logging.info(f"----- Time {time.time() - start_time} seconds -----")
     logging.info('End of program')

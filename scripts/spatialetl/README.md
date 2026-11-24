@@ -53,9 +53,7 @@ Compute the residence time of water from Eulerian tracers.
 `python symphonie_eulerian_residence_time.py  \
     -g /XXX/grid.nc \
     -d /XXX/REF2018 \
-    -o /XXX/outputs \    
-    --let_out_count 24 \
-    --let_out_freq BMM \
+    -o /XXX/outputs \  
     --max_duration 160 \
     --x_res 0.002 \
     --y_res 0.002

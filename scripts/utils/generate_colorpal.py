@@ -19,27 +19,31 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 import matplotlib.pyplot as plt
+import matplotlib.colors as colors
+import numpy as np
 
 if __name__ == "__main__":
-    min = 0
-    max = 35
+    min = 0.2
+    max = 2.1
+    step = 0.1
 
     # Generate jet colorpal with max - min colors
-    cmap = plt.colormaps['jet'].resampled(max-min)
+    norm = colors.Normalize(vmin=min, vmax=max)
+    cmap = plt.colormaps['jet']
 
     # Dict of value - color
     palette = {}
 
-    for i, valeur in enumerate(range(min, max)):
-        r, g, b, a = cmap(i)
+    for value in np.round(np.arange(min, max, step),2):
+        r, g, b, a = cmap(norm(value))
         hexa = '#{:02X}{:02X}{:02X}'.format(
             round(r * 255),
             round(g * 255),
             round(b * 255)
         )
-        palette[valeur] = hexa
+        palette[value] = hexa
 
     # Print the colorpal
-    for valeur, couleur in palette.items():
-        print(f"{valeur} : {couleur}")
+    for value, color in palette.items():
+        print(f"{value} : {color}")
 

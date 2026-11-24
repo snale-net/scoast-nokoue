@@ -20,12 +20,9 @@
 # SOFTWARE.
 import argparse
 import os
-from datetime import datetime
 from datetime import timedelta
 
-import numpy as np
 import time
-from dateutil.relativedelta import relativedelta
 
 from spatialetl.coverage import Coverage, TimeCoverage
 from spatialetl.providers.common.gdal.coverage.tiff.cog_writer import COGWriter
@@ -51,27 +48,6 @@ def parse_args():
         help="Path to the graphique folder (default: /config/GRAPHIQUES)",
         required=True,
         default="/config/GRAPHIQUES"
-    )
-
-    parser.add_argument(
-        "--let_out_count",
-        type=int,
-        default=24,
-        help="Number of tracers let out (défault : 24)",
-    )
-
-    parser.add_argument(
-        "--let_out_freq",
-        type=str,
-        choices=["BOM","MOM", "BMM"],
-        default="BMM",
-        help=(
-            "Tracers let ou frequency: "
-            "BOM (Beginning Of Month), "
-            "MOM (Middle Of Month), "
-            "BMM (Beginning and Middle of Month)."
-            "(default : BMM)"
-        )
     )
 
     parser.add_argument(
@@ -101,22 +77,27 @@ def parse_args():
         default="/config/TODTF"
     )
 
-    parser.add_argument("--sea_surface_residence_time", required=False, action="store_true", help="Compute sea surface residence time")
+    parser.add_argument("--sea_surface_residence_time", required=False, action="store_true",
+                        help="Compute sea surface residence time")
 
-    parser.add_argument("--sea_ground_residence_time", required=False, action="store_true", help="Compute sea residence time at ground level")
+    parser.add_argument("--sea_ground_residence_time", required=False, action="store_true",
+                        help="Compute sea residence time at ground level")
 
     return parser.parse_args()
 
+
 if __name__ == "__main__":
-    start_time = time.time()
+    timer_start_time = time.time()
     logging.setLevel(logging.RUN)
 
     args = parse_args()
 
     Coverage.HORIZONTAL_INTERPOLATOR = "cgal"
+    Coverage.HORIZONTAL_OVERLAPING_SIZE = 7
 
     # Setting to compute residence time up to {args.max_duration} days
     TimeCoverage.TIME_DELTA = timedelta(days=args.max_duration)
+    TimeCoverage.TIME_DELTA_DIRECTION = "after"
 
     # Create output dir
     os.makedirs(args.output_folder, exist_ok=True)
@@ -125,36 +106,11 @@ if __name__ == "__main__":
     reader = CoverageReader(args.grid_path,
                             os.path.join(args.graphique_folder, "*ECO3M-S*"))
 
-    # Get the start time of the simulation
-    cf_start_time = np.min(reader.times)
-    start_time = datetime(
-        cf_start_time.year,
-        cf_start_time.month,
-        cf_start_time.day,
-        cf_start_time.hour,
-        cf_start_time.minute,
-        cf_start_time.second,
-        cf_start_time.microsecond
-    )
-
-    # Compute date and index of tracers let out from the start time
-    dates = []
-    for i in range(args.let_out_count):
-        if args.let_out_freq == "BOM":
-            date = start_time.replace(day=1) + relativedelta(months=i)
-        elif args.let_out_freq == "MOM":
-            date = start_time.replace(day=15) + relativedelta(months=i)
-        elif args.let_out_freq == "BMM":
-            date = start_time + relativedelta(
-                months=i // 2,
-                days=14 * (i % 2)
-            )
-        dates.append(date)
-
-    date_tracers_map = {date: i + 1 for i, date in enumerate(dates)}
+    logging.info("Retrieve tracers let out dates")
+    date_tracers_map = reader.get_date_tracers_map()
 
     # For each let out, compute the residence time
-    for date, tracer_index in date_tracers_map.items():
+    for tracer_index, date in date_tracers_map.items():
 
         reader.set_tracer_index(tracer_index)
 
@@ -176,5 +132,5 @@ if __name__ == "__main__":
 
         writer.close()
 
-    logging.info(f"----- Time {time.time() - start_time} seconds -----")
+    logging.info(f"----- Time {time.time() - timer_start_time} seconds -----")
     logging.info('End of program')

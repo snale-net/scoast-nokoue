@@ -23,6 +23,10 @@ import logging
 import os
 from datetime import datetime
 
+import sys
+
+sys.path.append(".")
+
 from configbuilder.providers.symphonie.nokoue.v1.S26Nokoue import S26Nokoue
 
 
@@ -134,6 +138,13 @@ def parse_args():
     )
 
     parser.add_argument(
+        "--tracers_first_let_out_start_time",
+        type=lambda s: datetime.strptime(s, "%Y-%m"),
+        default=None,
+        help="Start datetime of the first let out (format: YYYY-MM)",
+    )
+
+    parser.add_argument(
         "--tracers_let_out_count",
         type=int,
         default=0,
@@ -195,6 +206,7 @@ if __name__ == "__main__":
         river_oueme_forcing_file=args.river_oueme_discharge_path,
         river_djonou_forcing_file=args.river_djonou_discharge_path,
         river_portonovo_forcing_file=args.river_djonou_discharge_path,
+        tracers_first_let_out_start_time=args.tracers_first_let_out_start_time,
         tracers_let_out_count=args.tracers_let_out_count,
         tracers_let_out_freq=args.tracers_let_out_freq,
     )

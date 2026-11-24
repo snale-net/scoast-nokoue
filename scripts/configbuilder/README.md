@@ -60,6 +60,7 @@ docker run \
   --mpi_domain_path  /XXXX/grid/description_domaine_507.next \ 
   --mpi_hole_path  /XXXX/grid/description_trous_507.txt \ 
   --acadjas_mask_path  /XXXX/grid/mask_mangrove_cnes.dat \ 
+  --tracers_first_let_out_start_time 2018-02 \
   --tracers_let_out_count 0 \
   --tracers_let_out_freq BMM  \
   --meteo_forcing_path /XXXX/forcings/ecmwf/2016-2019 \
@@ -85,6 +86,7 @@ singularity exec  \
   --mpi_domain_path  /XXXX/grid/description_domaine_507.next \ 
   --mpi_hole_path  /XXXX/grid/description_trous_507.txt \ 
   --acadjas_mask_path  /XXXX/grid/mask_mangrove_cnes.dat \ 
+  --tracers_first_let_out_start_time 2018-02 \
   --tracers_let_out_count 24 \
   --tracers_let_out_freq BMM  \
   --meteo_forcing_path /XXXX/forcings/ecmwf/2016-2019 \
